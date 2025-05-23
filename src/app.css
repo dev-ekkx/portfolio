@@ -1,1 +1,13 @@
 @import 'tailwindcss';
+
+@plugin "@iconify/tailwind4";
+
+@theme {
+	--color-background: oklch(0.2765 0.0242 277.87);
+}
+
+html,
+body {
+	cursor: none;
+	background-color: var(--color-background);
+}
