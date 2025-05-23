@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	const SNOWFLAKE_COUNT = 300;
+	const SNOWFLAKE_RADIUS = 3;
+	const SNOWFLAKE_SPEED = 0.1;
+	const SNOWFLAKE_OPACITY = 0.5;
 	let canvas: HTMLCanvasElement;
 	let ctx: CanvasRenderingContext2D;
 	let animationFrame: number;
@@ -9,7 +13,7 @@
 	let height: number;
 
 	let snowflakes: Snowflake[] = [];
-	let mouse = { x: -1000, y: -1000 }; // Initially far away
+	let mouse = { x: -200, y: -200 };
 
 	interface Snowflake {
 		x: number;
@@ -21,15 +25,13 @@
 		vy: number;
 	}
 
-	const SNOWFLAKE_COUNT = 200;
-
 	function createSnowflakes(count: number) {
 		snowflakes = Array.from({ length: count }, () => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
-			radius: Math.random() * 3 + 1,
-			speed: Math.random() * 1 + 0.5,
-			opacity: Math.random() * 0.5 + 0.3,
+			radius: Math.random() * SNOWFLAKE_RADIUS + 1,
+			speed: Math.random() + SNOWFLAKE_SPEED,
+			opacity: Math.random() * SNOWFLAKE_OPACITY + 0.3,
 			vx: 0,
 			vy: 0
 		}));
@@ -61,7 +63,7 @@
 			flake.vx *= 0.98;
 			flake.vy *= 0.98;
 
-			// Wrap around bottom
+			// Wrap around the bottom
 			if (flake.y > height) {
 				flake.y = -flake.radius;
 				flake.x = Math.random() * width;
@@ -116,5 +118,4 @@
 	}
 </script>
 
-<canvas bind:this={canvas} class="pointer-events-none fixed top-0 left-0 z-50 h-full w-full"
-></canvas>
+<canvas bind:this={canvas} class="pointer-events-none fixed top-0 left-0 h-full w-full"></canvas>
