@@ -1,6 +1,4 @@
 <script lang="ts">
-	import CustomCursor from '$lib/ui-elements/cursor.svelte';
-	import Snowflakes from '$lib/ui-elements/snowflakes.svelte';
 </script>
 
 <svelte:head>
@@ -10,6 +8,3 @@
 		name="description"
 	/>
 </svelte:head>
-
-<CustomCursor />
-<Snowflakes />

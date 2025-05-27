@@ -11,7 +11,7 @@
 
 		x = mouse.x;
 		y = mouse.y;
-			localStorage.setItem('mouseClient', JSON.stringify({x, y}));
+		localStorage.setItem('mouseClient', JSON.stringify({ x, y }));
 
 		const handleMouseMove = (event: MouseEvent) => {
 			x = event.clientX;
