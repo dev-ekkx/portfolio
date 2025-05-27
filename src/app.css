@@ -12,8 +12,13 @@
 }
 
 html,
+body {
+	background-color: var(--color-background);
+}
+
+html,
 body,
+button,
 a {
 	cursor: none;
-	background-color: var(--color-background);
 }

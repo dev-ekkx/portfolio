@@ -9,7 +9,6 @@
 	let isScrolled = $state(false);
 	let activeLink = $state(page.url.pathname);
 
-
 	onMount(() => {
 		const handleScroll = () => {
 			if (headerElement) {
@@ -28,23 +27,29 @@
 
 <header
 	bind:this={headerElement}
-	class={cn("g-px sticky top-0 z-50 flex items-center justify-between border-2 transition-all duration-200 ease-linear", {
-		'backdrop-blur-xs': isScrolled,
-	})}>
+	class={cn(
+		'g-px sticky top-0 z-50 flex items-center justify-between transition-all duration-300 ease-linear',
+		{
+			'backdrop-blur-xs shadow-lg': isScrolled
+		}
+	)}
+>
 	<Logo />
 
 	<nav>
 		<ul class="flex items-center gap-5">
 			{#each navLinks as link (link.route)}
-				<li class="relative group">
+				<li class="group relative">
 					{#if activeLink !== link.route}
-					<span
-						class="absolute h-0.5 bottom-0 bg-primary w-0 group-hover:w-full transition-all duration-200 ease-linear"></span>
+						<span
+							class="bg-primary absolute bottom-0 h-0.5 w-0 transition-all duration-200 ease-linear group-hover:w-full"
+						></span>
 					{/if}
-					<a href={link.route} class={cn("text-lg font-semibold text-white", {
-						"text-primary": activeLink === link.route,
-					})}
-					>{link.title}</a
+					<a
+						href={link.route}
+						class={cn('text-lg font-semibold text-white', {
+							'text-primary pointer-events-none': activeLink === link.route
+						})}>{link.title}</a
 					>
 				</li>
 			{/each}
