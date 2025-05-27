@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	let x = $state(-1000);
-	let y = $state(-1000);
+	let x = $state(600);
+	let y = $state(500);
 	onMount(() => {
 		const mouse = JSON.parse(localStorage.getItem('mouseClient') as string) || {
-			x: 0,
-			y: 0
+			x: window.innerWidth / 2,
+			y: window.innerHeight / 2
 		};
+
 		x = mouse.x;
 		y = mouse.y;
+			localStorage.setItem('mouseClient', JSON.stringify({x, y}));
 
 		const handleMouseMove = (event: MouseEvent) => {
 			x = event.clientX;
