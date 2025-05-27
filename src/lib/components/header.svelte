@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Logo from '$lib/ui-elements/logo.svelte';
+	import LogoComponent from '$lib/ui-elements/logo.svelte';
 	import navLinks from '$lib/data/navigation';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
@@ -30,14 +30,14 @@
 	class={cn(
 		'g-px sticky top-0 z-50 flex items-center justify-between transition-all duration-300 ease-linear',
 		{
-			'backdrop-blur-xs shadow-lg': isScrolled
+			'backdrop-blur-xs shadow': isScrolled
 		}
 	)}
 >
-	<Logo />
+	<LogoComponent />
 
 	<nav>
-		<ul class="flex items-center gap-5">
+		<ul class="hidden md:flex items-center gap-5">
 			{#each navLinks as link (link.route)}
 				<li class="group relative">
 					{#if activeLink !== link.route}
@@ -47,7 +47,7 @@
 					{/if}
 					<a
 						href={link.route}
-						class={cn('text-lg font-semibold text-white', {
+						class={cn('text-lg font-semibold', {
 							'text-primary pointer-events-none': activeLink === link.route
 						})}>{link.title}</a
 					>

@@ -3,22 +3,22 @@
 @plugin "@iconify/tailwind4";
 
 @theme {
-	--color-background: oklch(0.2765 0.0242 277.87);
-	--color-primary: oklch(0.6018 0.2351 299.68);
+    --color-background: oklch(0.2765 0.0242 277.87);
+    --color-primary: oklch(0.6018 0.2351 299.68);
 }
 
 @utility g-px {
-	padding-inline: 10vw;
+    @apply px-[10vw] xl:px-[13vw]
 }
 
 html,
 body {
-	background-color: var(--color-background);
+    background-color: var(--color-background);
 }
 
 html,
 body,
 button,
 a {
-	cursor: none;
+    @apply cursor-none text-white;
 }

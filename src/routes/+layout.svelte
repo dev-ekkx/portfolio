@@ -1,17 +1,15 @@
 <script lang="ts">
 	import '../app.css';
-	import CustomCursor from '$lib/ui-elements/cursor.svelte';
-	import Snowflakes from '$lib/ui-elements/snowflakes.svelte';
-	import Header from '$lib/components/header.svelte';
-	import { browser } from '$app/environment';
+	import CustomCursorComponent from '$lib/ui-elements/cursor.svelte';
+	import SnowflakesComponent from '$lib/ui-elements/snowflakes.svelte';
+	import HeaderComponent from '$lib/components/header.svelte';
 
 	let { children } = $props();
-	console.log(browser);
 </script>
 
-{#if browser}
-	<CustomCursor />
-{/if}
-<Header />
-{@render children()}
-<Snowflakes />
+<CustomCursorComponent />
+<HeaderComponent />
+<main>
+	{@render children()}
+</main>
+<SnowflakesComponent />
