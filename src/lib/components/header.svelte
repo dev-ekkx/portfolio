@@ -28,9 +28,9 @@
 <header
 	bind:this={headerElement}
 	class={cn(
-		'g-px sticky top-0 z-50 flex items-center justify-between transition-all duration-300 ease-linear',
+		'g-px sticky top-0 z-50 flex items-center justify-between transition-all duration-100 ease-linear',
 		{
-			'backdrop-blur-xs shadow': isScrolled
+			'backdrop-blur-sm bg-background/40': isScrolled
 		}
 	)}
 >
@@ -48,7 +48,7 @@
 					<a
 						href={link.route}
 						class={cn('text-lg font-semibold', {
-							'text-primary pointer-events-none': activeLink === link.route
+							'text-primary! pointer-events-none': activeLink === link.route
 						})}>{link.title}</a
 					>
 				</li>

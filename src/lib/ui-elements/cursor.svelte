@@ -3,12 +3,12 @@
 
 	let isLinkElement = $state(false);
 
-	let x = $state(600);
-	let y = $state(500);
+	let x = $state(-1000);
+	let y = $state(-1000);
 	onMount(() => {
 		const mouse = JSON.parse(localStorage.getItem('mouseClient') as string) || {
-			x: window.innerWidth / 2,
-			y: window.innerHeight / 2
+			x: -1000,
+			y: -1000
 		};
 
 		x = mouse.x;
@@ -26,8 +26,7 @@
 
 			// Check if a hovered element is a button or link
 			const target = event.target as HTMLElement;
-
-			isLinkElement = target.tagName === 'BUTTON' || target.tagName === 'A';
+			isLinkElement = target.tagName === 'BUTTON' || target.tagName === 'A' || !!target.closest("button") || !!target.closest("a");
 		};
 
 		window.addEventListener('mousemove', handleMouseMove);
@@ -38,7 +37,7 @@
 	});
 </script>
 
-<div class="cursor text-3xl" style="transform: translate({x}px, {y}px);">
+<div class="cursor text-2xl" style="transform: translate({x}px, {y}px);">
 	{#if isLinkElement}
 		<span>
 			<i class="fa-solid fa-hand-pointer"></i>

@@ -3,8 +3,17 @@
 @plugin "@iconify/tailwind4";
 
 @theme {
-    --color-background: oklch(0.2765 0.0242 277.87);
+    /*--color-background: oklch(0.2765 0.0242 277.87);*/
+    --color-background: oklch(0 0 0);
     --color-primary: oklch(0.6018 0.2351 299.68);
+}
+
+@utility g-pl {
+    @apply pl-[10vw] xl:pl-[13vw]
+}
+
+@utility g-pr {
+    @apply pr-[10vw] xl:pr-[13vw]
 }
 
 @utility g-px {
