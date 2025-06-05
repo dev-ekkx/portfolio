@@ -37,7 +37,7 @@
 	});
 </script>
 
-<div class="cursor text-2xl" style="transform: translate({x}px, {y}px);">
+<div class="cursor text-xl" style="transform: translate({x}px, {y}px);">
 	{#if isLinkElement}
 		<span>
 			<i class="fa-solid fa-hand-pointer"></i>

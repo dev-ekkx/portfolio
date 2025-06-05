@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>DR</title>
+	<title>Emmanuel Kpendo - Software & Cloud Engineer</title>
 	<meta
 		content="Emmanuel Kpendo, Dela Ricch, front-end, frontend software engineer, solutions architect"
 		name="description"

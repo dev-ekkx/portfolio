@@ -1,15 +1,15 @@
 <script lang="ts">
 </script>
 
-<section class="g-pl pr-4 grid grid-cols-1 md:grid-cols-2 mt-36 gap-4">
-	<div class="flex flex-col gap-3">
-		<span class="relative uppercase text-[3.5rem] font-bold h-28 flex items-end">
-			<span class="pl-1 text-primary absolute -top-1.5">software</span>
+<section class="g-pl pr-4 grid grid-cols-1 md:grid-cols-2 mt-[30vh] gap-4">
+	<div class="flex flex-col gap-3 max-w-lg">
+		<span class="relative uppercase text-[3.7rem] font-bold h-28 flex items-end">
+			<span class="pl-1 text-primary absolute -top-2.5">software</span>
 			<span>engineer</span>
 		</span>
 
 		<p>Hi! I'm <b>Emmanuel Kpendo.</b> A creative Frontend Developer with 3+ years of experience in building
-			high-performance, scalable, and responsive web applications.</p>
+			high-performance, scalable, and responsive applications.</p>
 
 		<div class="flex items-center gap-4 mt-4">
 			<button class="border px-4 py-1">Let's talk</button>
@@ -21,7 +21,7 @@
 			</button>
 		</div>
 	</div>
-	<div class="relative aspect-square h-[30rem] bg-slate-800">
+	<div class="relative h-[10rem] bg-slate-800">
 
 		<!--		<div-->
 		<!--			class=" w-11/12 h-11/12 border rounded-full absolute  left-0  border-y-transparent"></div>-->
