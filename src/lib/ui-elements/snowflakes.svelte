@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	const SNOWFLAKE_COUNT = 100;
-	const SNOWFLAKE_RADIUS = 2;
+	const SNOWFLAKE_COUNT = 120;
+	const SNOWFLAKE_RADIUS = 1;
 	const SNOWFLAKE_SPEED = 0.1;
 	const SNOWFLAKE_OPACITY = 0.5;
 	let canvas: HTMLCanvasElement;
