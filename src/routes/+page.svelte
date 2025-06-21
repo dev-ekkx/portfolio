@@ -1,5 +1,6 @@
 <script lang="ts">
 	import HeroComponent from '$lib/components/hero.svelte';
+	import AboutComponent from '$lib/components/about.svelte';
 </script>
 
 <svelte:head>
@@ -11,4 +12,5 @@
 </svelte:head>
 
 <HeroComponent />
+<AboutComponent />
 <div class="h-[99vh]"></div>

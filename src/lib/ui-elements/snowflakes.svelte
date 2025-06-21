@@ -118,4 +118,4 @@
 	}
 </script>
 
-<canvas bind:this={canvas} class="pointer-events-none fixed top-0 left-0 h-full w-full"></canvas>
+<canvas bind:this={canvas} class="pointer-events-none fixed top-0 z-50 left-0 h-full w-full"></canvas>

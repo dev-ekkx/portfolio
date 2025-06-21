@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
+	import { calculateYearsOfExperience } from '$lib/utils';
 
 	let heroVisible = $state(false);
 
@@ -17,7 +18,8 @@
 			<span in:fly={{y: -50, delay: 500}}>engineer</span>
 		</span>
 
-		<p in:fly={{y: -50, delay: 1000}}>Hi! I'm <b>Emmanuel Kpendo.</b> A creative (Software & Cloud) Engineer with 4+
+		<p in:fly={{y: -50, delay: 1000}}>Hi! I'm <b>Emmanuel Kpendo.</b> A creative (Software & Cloud) Engineer
+			with {calculateYearsOfExperience()}+
 			years
 			of experience in building
 			high-performance, scalable, and responsive applications.</p>
