@@ -1,40 +1,16 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
-	import { onMount } from 'svelte';
+	import ScrollItem from '$lib/ui-elements/scroll-item.svelte';
 
 	let isVisible = $state(false);
 	let element = $state<HTMLElement | null>(null);
 
-	onMount(() => {
-		if (!element) return;
-
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					isVisible = entry.isIntersecting;
-				});
-			},
-			{
-				threshold: 0.5 // trigger when 50% visible
-			}
-		);
-
-		observer.observe(element);
-
-		return () => {
-			observer.disconnect();
-		};
-	});
 
 </script>
-<div
-	class="border"
-	use:inView
->
 
-	<!--{#if isInView}-->
+<!--{#if isInView}-->
+<ScrollItem direction="left">
+
 	<section class="g-px flex flex-col-reverse md:grid md:grid-cols-2 gap-8 md:gap-4"
-					 in:fly={isInView ? { y: 100, duration: 500 } : { y: -100, duration: 500 } }
 	>
 		<div class="flex flex-col gap-2 pt-8">
 			<h2 class="capitalize text-primary font-semibold text-2xl">#about me</h2>
@@ -47,5 +23,5 @@
 
 		</div>
 	</section>
-	<!--{/if}-->
-</div>
+</ScrollItem>
+<!--{/if}-->

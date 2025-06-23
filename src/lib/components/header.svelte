@@ -6,38 +6,18 @@
 	import { fly } from 'svelte/transition';
 	import { cn } from '$lib/utils';
 
-	let headerElement = $state<HTMLElement | null>(null);
-	let isScrolled = $state(false);
 	let activeLink = $state(page.url.pathname);
 	let showHeader = $state(false);
 
 	onMount(() => {
 		showHeader = true;
-		const handleScroll = () => {
-			if (headerElement) {
-				isScrolled = window.scrollY > headerElement.offsetHeight;
-			}
-		};
-
-		window.addEventListener('scroll', handleScroll);
-		handleScroll();
-
-		return () => {
-			window.removeEventListener('scroll', handleScroll);
-		};
 	});
 </script>
 
 {#if showHeader}
 	<header
-		bind:this={headerElement}
 		in:fly={{y: -10, delay: 2000}}
-		class={cn(
-		'g-px sticky top-0 z-50 flex items-center justify-between transition-all duration-100 ease-linear',
-		{
-			'backdrop-blur-sm bg-background/40': isScrolled
-		}
-	)}
+		class="g-px backdrop-blur-sm bg-background/40 sticky top-0 z-50 flex items-center justify-between transition-all duration-100 ease-linear"
 	>
 		<LogoComponent />
 
