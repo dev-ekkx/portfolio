@@ -12,7 +12,7 @@
 </script>
 {#if heroVisible}
 	<section
-		class="max-w-lg mx-auto flex flex-col gap-3 items-center justify-center text-center">
+		class="max-w-lg mx-auto flex flex-col gap-3 items-center justify-center text-center h-[90vh] border">
 		<span class="relative uppercase text-[3.7rem] justify-center font-bold h-28 flex items-end">
 			<span class="text-primary absolute -top-2.5" in:fly={{y: -50}}>software</span>
 			<span in:fly={{y: -50, delay: 500}}>engineer</span>

@@ -11,7 +11,7 @@
 	/>
 </svelte:head>
 
-<div class="flex flex-col gap-[30vh]">
+<div class="flex flex-col gap-[30vh] ">
 
 	<HeroComponent />
 	<AboutComponent />

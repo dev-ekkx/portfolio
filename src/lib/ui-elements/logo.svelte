@@ -1,1 +1,4 @@
-<img alt="logo" class="w-20" fetchpriority="high" src="/logo.png" />
+<div class="w-28 overflow-clip">
+
+	<img alt="logo" class="scale-200" fetchpriority="high" src="/logo.svg" />
+</div>
