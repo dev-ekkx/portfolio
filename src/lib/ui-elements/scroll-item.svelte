@@ -1,9 +1,10 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import type { Directions } from '$lib/types';
 	import { inView } from '$lib/actions/useInview';
 
-	const { direction = 'top', children } = $props<{ direction?: Directions, children: Node }>();
+	const { direction = 'top', children } = $props<{ direction?: Directions; children: Snippet }>();
 	let isVisible = $state(false);
 
 	let element: HTMLElement;
