@@ -22,5 +22,3 @@ export const calculateYearsOfExperience = (
 
 	return startExperience + yearsPassed;
 };
-
-console.log(calculateYearsOfExperience());
