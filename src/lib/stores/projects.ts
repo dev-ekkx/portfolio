@@ -1,92 +1,78 @@
+import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
-import { defaultProjects } from '$lib/data/projects';
 import type { Project } from '$lib/types';
 
-const { subscribe, set, update } = writable<Project[]>([]);
-let localCounter = 0;
+const STORAGE_KEY = 'portfolio_projects_v1';
 
-const makeLocalId = () => {
-	localCounter += 1;
-	return `local-${Date.now()}-${localCounter}`;
+const defaultProjects: Project[] = [
+	{
+		id: 'atlas-finance',
+		title: 'Atlas Finance Platform',
+		summary:
+			'Unified treasury and analytics suite for multi-entity fintech operations with real-time insights and automated compliance.',
+		role: 'Lead Frontend & Cloud Engineer',
+		impact: 'Cut reporting time by 62% and improved release velocity by 3x.',
+		year: '2025',
+		status: 'Shipped',
+		stack: ['Next.js', 'React', 'Golang', 'Postgres', 'SQLC', 'AWS ECS']
+	},
+	{
+		id: 'aeron-ops',
+		title: 'Aeron Ops Console',
+		summary:
+			'Operations command center for aviation logistics with predictive ETAs, live fleet health, and incident response workflows.',
+		role: 'Senior UI Engineer',
+		impact: 'Reduced manual dispatching by 48% and improved on-time deliveries.',
+		year: '2024',
+		status: 'Shipped',
+		stack: ['Angular', 'RxJS', 'SvelteKit', 'AWS Lambda', 'EventBridge']
+	},
+	{
+		id: 'aurora-cloud',
+		title: 'Aurora Cloud Studio',
+		summary:
+			'Design system and deployment toolkit for enterprise SaaS teams with automated infra provisioning and CI visibility.',
+		role: 'Staff Software Engineer',
+		impact: 'Accelerated new product launches from weeks to days.',
+		year: '2023',
+		status: 'Scaling',
+		stack: ['Vue', 'Vite', 'Golang', 'Terraform', 'AWS RDS']
+	}
+];
+
+const loadProjects = (): Project[] => {
+	if (!browser) return defaultProjects;
+	const raw = localStorage.getItem(STORAGE_KEY);
+	if (!raw) return defaultProjects;
+	try {
+		const parsed = JSON.parse(raw) as Project[];
+		return parsed.length ? parsed : defaultProjects;
+	} catch {
+		return defaultProjects;
+	}
 };
 
-const cleanPayload = (project: Omit<Project, 'id'>): Omit<Project, 'id'> => ({
-	title: project.title.trim(),
-	summary: project.summary.trim(),
-	role: project.role.trim(),
-	impact: project.impact.trim(),
-	year: project.year.trim(),
-	status: project.status,
-	stack: project.stack.map((item) => item.trim()).filter(Boolean)
-});
+const { subscribe, set, update } = writable<Project[]>(loadProjects());
 
-const hydrateDefaults = () => set(defaultProjects.map((project, index) => ({ ...project, id: `default-${index}` })));
+let hydrated = false;
+if (browser) {
+	subscribe((value) => {
+		if (!hydrated) {
+			hydrated = true;
+			return;
+		}
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+	});
+}
 
 export const projects = {
 	subscribe,
-	load: async (fetchFn: typeof fetch = fetch) => {
-		try {
-			const res = await fetchFn('/api/projects');
-			if (!res.ok) throw new Error('Failed to load projects');
-			const data = (await res.json()) as Project[];
-			set(data);
-		} catch {
-			hydrateDefaults();
-		}
-	},
-	add: async (project: Omit<Project, 'id'>, fetchFn: typeof fetch = fetch) => {
-		const payload = cleanPayload(project);
-		let created: Project;
-		try {
-			const res = await fetchFn('/api/projects', {
-				method: 'POST',
-				headers: { 'content-type': 'application/json' },
-				body: JSON.stringify(payload)
-			});
-			if (!res.ok) throw new Error('Unable to create project');
-			created = (await res.json()) as Project;
-		} catch {
-			created = { ...payload, id: makeLocalId() };
-		}
-		update((items) => [created, ...items]);
-		return created;
-	},
-	updateProject: async (project: Project, fetchFn: typeof fetch = fetch) => {
-		const payload = cleanPayload(project);
-		let updatedProject: Project;
-		try {
-			const res = await fetchFn(`/api/projects/${project.id}`, {
-				method: 'PUT',
-				headers: { 'content-type': 'application/json' },
-				body: JSON.stringify(payload)
-			});
-			if (!res.ok) throw new Error('Unable to update project');
-			updatedProject = (await res.json()) as Project;
-		} catch {
-			updatedProject = { ...payload, id: project.id };
-		}
-		update((items) => items.map((item) => (item.id === updatedProject.id ? updatedProject : item)));
-		return updatedProject;
-	},
-	remove: async (id: string, fetchFn: typeof fetch = fetch) => {
-		try {
-			const res = await fetchFn(`/api/projects/${id}`, { method: 'DELETE' });
-			if (!res.ok && res.status !== 204) throw new Error('Unable to delete project');
-		} catch {
-			// Keep client responsive even if DB is temporarily unavailable.
-		}
-		update((items) => items.filter((item) => item.id !== id));
-	},
-	reset: async (fetchFn: typeof fetch = fetch) => {
-		try {
-			const res = await fetchFn('/api/projects/reset', { method: 'POST' });
-			if (!res.ok) throw new Error('Unable to reset projects');
-			const data = (await res.json()) as Project[];
-			set(data);
-		} catch {
-			hydrateDefaults();
-		}
-	}
+	set,
+	add: (project: Project) => update((items) => [project, ...items]),
+	updateProject: (project: Project) =>
+		update((items) => items.map((item) => (item.id === project.id ? project : item))),
+	remove: (id: string) => update((items) => items.filter((item) => item.id !== id)),
+	reset: () => set(defaultProjects)
 };
 
 export type { Project };
