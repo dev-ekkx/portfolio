@@ -90,6 +90,8 @@
 	let root: HTMLElement;
 
 	onMount(() => {
+		void projects.load();
+
 		let cleanup = () => {};
 
 		const initAnimations = async () => {

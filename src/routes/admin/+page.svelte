@@ -1,16 +1,15 @@
 <script lang="ts">
 	import { projects, type Project } from '$lib/stores/projects';
+	import { onMount } from 'svelte';
 	import Badge from '$lib/components/ui/badge/badge.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import Input from '$lib/components/ui/input/input.svelte';
-	import { Select, SelectContent, SelectItem, SelectTrigger } from '$lib/components/ui/select';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 
 	const statusOptions: Project['status'][] = ['Shipped', 'Scaling', 'In Discovery', 'Archived'];
 
 	let editingId = $state<string | null>(null);
-	let statusSelection = $state<string[]>(['In Discovery']);
 	let form = $state<Project>({
 		id: '',
 		title: '',
@@ -24,7 +23,6 @@
 
 	const resetForm = () => {
 		editingId = null;
-		statusSelection = ['In Discovery'];
 		form = {
 			id: '',
 			title: '',
@@ -37,37 +35,34 @@
 		};
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		if (!form.title.trim()) return;
 
-		const payload: Project = {
+		const payload: Omit<Project, 'id'> = {
 			...form,
-			id: editingId ?? (globalThis.crypto?.randomUUID?.() ?? `proj-${Date.now()}`),
 			stack: form.stack.map((item) => item.trim()).filter(Boolean)
 		};
 
 		if (editingId) {
-			projects.updateProject(payload);
+			await projects.updateProject({ ...payload, id: editingId });
 		} else {
-			projects.add(payload);
+			await projects.add(payload);
 		}
 		resetForm();
 	};
 
 	const handleEdit = (project: Project) => {
 		editingId = project.id;
-		statusSelection = [project.status];
 		form = { ...project };
 	};
 
-	const handleDelete = (id: string) => {
-		projects.remove(id);
+	const handleDelete = async (id: string) => {
+		await projects.remove(id);
 		if (editingId === id) resetForm();
 	};
 
-	$effect(() => {
-		const selectedStatus = statusSelection[0] as Project['status'] | undefined;
-		if (selectedStatus) form.status = selectedStatus;
+	onMount(() => {
+		void projects.load();
 	});
 </script>
 
@@ -96,7 +91,13 @@
 					<h2 class="text-xl font-semibold">{editingId ? 'Edit project' : 'Add new project'}</h2>
 					<Button variant="outline" class="border-cyan-100/40 bg-white/10" onclick={resetForm}>Reset</Button>
 				</div>
-				<form class="mt-6 space-y-4" onsubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+				<form
+					class="mt-6 space-y-4"
+					onsubmit={(e) => {
+						e.preventDefault();
+						void handleSubmit();
+					}}
+				>
 					<div>
 						<label class="text-xs uppercase tracking-[0.2em] text-white/40" for="project-title">Project title</label>
 						<Input id="project-title" bind:value={form.title} placeholder="Atlas Finance Platform" />
@@ -127,16 +128,15 @@
 						</div>
 						<div>
 							<label class="text-xs uppercase tracking-[0.2em] text-white/40" for="project-status">Status</label>
-							<Select type="multiple" bind:value={statusSelection}>
-								<SelectTrigger id="project-status" class="w-full border-cyan-100/35 bg-white/10 text-white">
-									{statusSelection[0] ?? 'Select status'}
-								</SelectTrigger>
-								<SelectContent>
+							<select
+								id="project-status"
+								bind:value={form.status}
+								class="h-9 w-full rounded-md border border-cyan-100/35 bg-white/10 px-3 py-2 text-sm text-white shadow-xs outline-none"
+							>
 								{#each statusOptions as status}
-									<SelectItem value={status} label={status} />
+									<option value={status}>{status}</option>
 								{/each}
-								</SelectContent>
-							</Select>
+							</select>
 						</div>
 						<div>
 							<label class="text-xs uppercase tracking-[0.2em] text-white/40" for="project-stack">Stack</label>
@@ -164,7 +164,7 @@
 					<p class="text-sm uppercase tracking-[0.3em] text-white/50">Project inventory</p>
 					<p class="mt-2 text-4xl font-semibold">{$projects.length}</p>
 					<p class="mt-2 text-sm text-white/80">Active case studies across enterprise + SaaS.</p>
-					<Button variant="outline" class="mt-6 border-cyan-100/40 bg-white/10" onclick={() => projects.reset()}>Restore defaults</Button>
+					<Button variant="outline" class="mt-6 border-cyan-100/40 bg-white/10" onclick={() => void projects.reset()}>Restore defaults</Button>
 				</Card>
 				<Card class="holo-card p-6">
 					<p class="text-sm uppercase tracking-[0.3em] text-white/50">Notes</p>
@@ -194,7 +194,7 @@
 					</div>
 					<div class="flex flex-wrap gap-3">
 						<Button variant="outline" class="border-cyan-100/40 bg-white/10" onclick={() => handleEdit(project)}>Edit</Button>
-						<Button variant="ghost" class="border border-red-300/30 bg-red-500/20 text-red-200 hover:bg-red-500/30" onclick={() => handleDelete(project.id)}>
+						<Button variant="ghost" class="border border-red-300/30 bg-red-500/20 text-red-200 hover:bg-red-500/30" onclick={() => void handleDelete(project.id)}>
 							Delete
 						</Button>
 					</div>
