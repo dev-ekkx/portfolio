@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { deleteProject, updateProject } from '$lib/server/repositories/projects';
-import type { Project } from '$lib/types';
+import type { Project } from '$lib/interfaces';
 
 export const PUT = async ({ request, params }) => {
 	try {

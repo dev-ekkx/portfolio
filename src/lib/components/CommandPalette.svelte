@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CmdItem } from '$lib/types';
+	import type { CmdItem } from '$lib/interfaces';
 
 	interface Props {
 		open: boolean;

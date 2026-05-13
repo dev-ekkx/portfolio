@@ -4,7 +4,6 @@
 
 	const COLS = 26;
 	const ROWS = 14;
-	const PERIM = 4; // perimeter of each 1x1 SVG cell
 
 	interface Props {
 		person: Person;
@@ -13,8 +12,6 @@
 	}
 
 	let { person, onScrollToWork, onScrollToContact }: Props = $props();
-
-	let svgRef: SVGSVGElement;
 
 	onMount(() => {
 		let alive = true;
@@ -27,12 +24,6 @@
 
 		(async () => {
 			const { gsap } = await import('gsap');
-			const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-			gsap.registerPlugin(ScrollTrigger);
-
-			if (!svgRef) return;
-
-			const cells = svgRef.querySelectorAll('.cell');
 		})();
 
 		return () => {

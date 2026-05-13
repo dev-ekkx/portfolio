@@ -1,5 +1,5 @@
 import { defaultProjects } from '$lib/data/projects';
-import type { Project } from '$lib/types';
+import type { Project } from '$lib/interfaces';
 import { prisma } from '$lib/server/prisma';
 
 const validStatuses = new Set(['Shipped', 'Scaling', 'In Discovery', 'Archived'] as const);

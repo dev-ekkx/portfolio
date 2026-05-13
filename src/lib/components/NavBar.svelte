@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { NavSection, Person } from '$lib/types';
+	import type { Person } from '$lib/interfaces';
+	import type { NavSection } from '$lib/types';
 
 	interface Props {
 		activeId: string;

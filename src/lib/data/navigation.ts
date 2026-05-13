@@ -1,4 +1,5 @@
-import type { CmdItem, NavSection } from '$lib/types';
+import type { CmdItem } from '$lib/interfaces';
+import type { NavSection } from '$lib/types';
 import { PERSON } from './person';
 
 export const NAV_SECTIONS: NavSection[] = [

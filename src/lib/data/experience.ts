@@ -1,4 +1,4 @@
-import type { ExperienceItem } from '$lib/types';
+import type { ExperienceItem } from '$lib/interfaces';
 
 export const EXPERIENCE: ExperienceItem[] = [
 	{

@@ -1,4 +1,4 @@
-import type { Project, WorkProject } from '$lib/types';
+import type { Project, WorkProject } from '$lib/interfaces';
 
 export type ProjectSeed = Omit<Project, 'id'>;
 

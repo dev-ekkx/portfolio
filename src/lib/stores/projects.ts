@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
-import type { Project } from '$lib/types';
+import type { Project } from '$lib/interfaces';
 
 const STORAGE_KEY = 'portfolio_projects_v1';
 

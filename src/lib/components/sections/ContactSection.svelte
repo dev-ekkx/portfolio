@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Person } from '$lib/types';
+	import type { Person } from '$lib/interfaces';
 
 	interface Props {
 		person: Person;

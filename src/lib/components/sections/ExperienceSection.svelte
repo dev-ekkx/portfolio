@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ExperienceItem } from '$lib/types';
+	import type { ExperienceItem } from '$lib/interfaces';
 
 	interface Props {
 		experience: ExperienceItem[];

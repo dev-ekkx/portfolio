@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { StackGroup } from '$lib/types';
+	import type { StackGroup } from '$lib/interfaces';
 
 	interface Props {
 		stack: StackGroup[];

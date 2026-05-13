@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { WorkProject } from '$lib/types';
+	import type { WorkProject } from '$lib/interfaces';
 
 	interface Props {
 		projects: WorkProject[];

@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { defaultProjects } from '$lib/data/projects';
 import { createProject, getProjects } from '$lib/server/repositories/projects';
-import type { Project } from '$lib/types';
+import type { Project } from '$lib/interfaces';
 
 export const GET = async () => {
 	try {
