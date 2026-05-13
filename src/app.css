@@ -241,32 +241,45 @@
 /* ── Nav ── */
 .nav {
   position: sticky; top: 0; z-index: var(--z-sticky);
-  /* iOS glass: near-transparent white base + heavy blur + brightness lift */
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.06) 100%),
-    rgba(255,255,255,0.07);
-  backdrop-filter: blur(48px) saturate(200%) brightness(1.12);
-  -webkit-backdrop-filter: blur(48px) saturate(200%) brightness(1.12);
-  /* crisp light edges - top highlight + bottom separator */
-  border-top: 1px solid rgba(255,255,255,0.22);
-  border-bottom: 1px solid rgba(255,255,255,0.10);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.16) inset,
-    0 12px 40px rgba(0,0,0,0.22),
-    0 1px 3px rgba(0,0,0,0.12);
   color: var(--canvas-fg);
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.06);
+}
+.nav::before {
+  content: '';
+  position: absolute; inset: 0; z-index: -1;
+  backdrop-filter: blur(60px) saturate(180%);
+  -webkit-backdrop-filter: blur(60px) saturate(180%);
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,0.28) 0%,
+      rgba(255,255,255,0.12) 40%,
+      rgba(180,220,255,0.10) 100%
+    );
+}
+.nav::after {
+  content: '';
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.10) 0%,
+    rgba(255,255,255,0.00) 50%
+  );
+  border-top: 1px solid rgba(255,255,255,0.35);
+  pointer-events: none;
 }
 .nav.on-canvas {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%),
-    rgba(255,255,255,0.05);
-  border-top-color: rgba(255,255,255,0.16);
   border-bottom-color: rgba(255,255,255,0.08);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.12) inset,
-    0 12px 40px rgba(0,0,0,0.16),
-    0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.04);
   color: var(--canvas-fg);
+}
+.nav.on-canvas::before {
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,0.18) 0%,
+      rgba(255,255,255,0.07) 40%,
+      rgba(100,180,255,0.07) 100%
+    );
 }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
 .brand {
