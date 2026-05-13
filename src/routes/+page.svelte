@@ -1,33 +1,27 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import NavBar from '$lib/components/NavBar.svelte';
 	import CommandPalette from '$lib/components/CommandPalette.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import HeroSection from '$lib/components/sections/HeroSection.svelte';
-	import WorkSection from '$lib/components/sections/WorkSection.svelte';
+	import NavBar from '$lib/components/NavBar.svelte';
 	import AboutSection from '$lib/components/sections/AboutSection.svelte';
-	import ExperienceSection from '$lib/components/sections/ExperienceSection.svelte';
-	import StackSection from '$lib/components/sections/StackSection.svelte';
 	import ContactSection from '$lib/components/sections/ContactSection.svelte';
+	import ExperienceSection from '$lib/components/sections/ExperienceSection.svelte';
+	import HeroSection from '$lib/components/sections/HeroSection.svelte';
+	import StackSection from '$lib/components/sections/StackSection.svelte';
+	import WorkSection from '$lib/components/sections/WorkSection.svelte';
 
-	import { PERSON, FACTS } from '$lib/data/person';
-	import { PROJECTS, PROJECT_TAGS } from '$lib/data/projects';
 	import { EXPERIENCE } from '$lib/data/experience';
+	import { BUDGETS, CMD_ITEMS, NAV_SECTIONS } from '$lib/data/navigation';
+	import { FACTS, PERSON } from '$lib/data/person';
+	import { PROJECTS, PROJECT_TAGS } from '$lib/data/projects';
 	import { STACK } from '$lib/data/stack';
-	import { NAV_SECTIONS, CMD_ITEMS, BUDGETS } from '$lib/data/navigation';
-	import type { CmdItem } from '$lib/types';
+	import type { CmdItem } from '$lib/interfaces';
 
 	let activeId = $state('work');
 	let onCanvas = $state(true);
 	let cmdOpen = $state(false);
 	let lenis: unknown = null;
-
-	const extraCleanups: (() => void)[] = [];
-
-	function registerCleanup(fn: () => void) {
-		extraCleanups.push(fn);
-	}
 
 	function scrollToAnchor(id: string) {
 		const el = document.getElementById(id);
@@ -135,10 +129,7 @@
 			cleanups.push(() => triggers.forEach((t) => t?.kill()));
 		})();
 
-		return () => {
-			cleanups.forEach((f) => f());
-			extraCleanups.forEach((f) => f());
-		};
+		return () => cleanups.forEach((f) => f());
 	});
 </script>
 
@@ -164,7 +155,6 @@
 		person={PERSON}
 		onScrollToWork={() => scrollToAnchor('work')}
 		onScrollToContact={() => scrollToAnchor('contact')}
-		onCleanup={registerCleanup}
 	/>
 
 	<WorkSection projects={PROJECTS} projectTags={PROJECT_TAGS} />

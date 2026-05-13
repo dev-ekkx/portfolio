@@ -363,11 +363,9 @@
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 38%, #000 0%, #000 55%, transparent 92%);
           mask-image: radial-gradient(ellipse 80% 70% at 50% 38%, #000 0%, #000 55%, transparent 92%);
 }
-.hero-grid-svg .cell { fill: var(--accent); opacity: 0; }
+.hero-grid-svg .cell { fill: var(--accent); fill-opacity: 0; stroke: var(--accent); stroke-width: 0.06; stroke-opacity: 0; }
 .hero-grid-svg .cell.glow { filter: drop-shadow(0 0 14px color-mix(in srgb, var(--accent) 70%, transparent)); }
-.hero-grid-svg .node { fill: rgba(255,255,255,0.22); }
-.hero-grid-svg .node.hot { fill: var(--accent); filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 80%, transparent)); }
-.hero-grid-svg .scan { stroke: var(--accent); stroke-width: 2; opacity: 0; filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent) 70%, transparent)); }
+.hero-grid-svg .cell.border-active { filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent) 55%, transparent)); }
 .hero-grid-svg .ring { fill: none; stroke: var(--accent); stroke-width: 2; opacity: 0; }
 
 /* ── Buttons ── */

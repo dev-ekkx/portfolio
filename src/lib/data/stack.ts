@@ -1,7 +1,11 @@
-import type { StackGroup } from '$lib/types';
+import type { StackGroup } from '$lib/interfaces';
 
 export const STACK: StackGroup[] = [
-	{ name: 'Languages', note: 'Where I think', items: ['TypeScript', 'Go', 'SQL', 'Python', 'HTML/CSS'] },
+	{
+		name: 'Languages',
+		note: 'Where I think',
+		items: ['TypeScript', 'Go', 'SQL', 'Python', 'HTML/CSS']
+	},
 	{
 		name: 'Frontend',
 		note: 'UI and state',
