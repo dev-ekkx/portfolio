@@ -241,14 +241,24 @@
 /* ── Nav ── */
 .nav {
   position: sticky; top: 0; z-index: var(--z-sticky);
-  background: color-mix(in srgb, var(--surface) 85%, transparent);
-  backdrop-filter: saturate(180%) blur(10px);
-  -webkit-backdrop-filter: saturate(180%) blur(10px);
-  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0) 100%),
+    rgba(11, 27, 39, 0.58);
+  backdrop-filter: saturate(180%) blur(22px);
+  -webkit-backdrop-filter: saturate(180%) blur(22px);
+  border-bottom: 1px solid rgba(255,255,255,0.09);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.05) inset,
+    0 8px 40px rgba(0,0,0,0.28);
 }
 .nav.on-canvas {
-  background: color-mix(in srgb, var(--canvas) 70%, transparent);
-  border-bottom-color: var(--canvas-line);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%),
+    rgba(6, 28, 42, 0.45);
+  border-bottom-color: rgba(255,255,255,0.07);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.04) inset,
+    0 8px 40px rgba(0,0,0,0.20);
   color: var(--canvas-fg);
 }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
