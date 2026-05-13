@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("MONGODB_URL")
 }
 
 model Project {
@@ -16,6 +15,62 @@ model Project {
   year      String
   status    String
   stack     String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model WorkProject {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug         String   @unique
+  year         String
+  title        String
+  role         String
+  blurb        String
+  tags         String[]
+  stack        String[]
+  stats        Json
+  thumbVariant String
+  thumbCaption String
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ExperienceItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  when      String
+  role      String
+  co        String
+  body      String
+  place     String
+  current   Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model StackGroup {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  note      String
+  items     String[]
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SitePerson {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  initials  String
+  role      String
+  location  String
+  email     String
+  github    String
+  linkedin  String
+  twitter   String
+  available String
+  facts     Json   @default("[]")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

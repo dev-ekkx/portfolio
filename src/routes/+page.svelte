@@ -11,12 +11,12 @@
 	import StackSection from '$lib/components/sections/StackSection.svelte';
 	import WorkSection from '$lib/components/sections/WorkSection.svelte';
 
-	import { EXPERIENCE } from '$lib/data/experience';
 	import { BUDGETS, CMD_ITEMS, NAV_SECTIONS } from '$lib/data/navigation';
-	import { FACTS, PERSON } from '$lib/data/person';
-	import { PROJECTS, PROJECT_TAGS } from '$lib/data/projects';
-	import { STACK } from '$lib/data/stack';
+	import { PROJECT_TAGS } from '$lib/data/projects';
 	import type { CmdItem } from '$lib/interfaces';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
 
 	let activeId = $state('work');
 	let onCanvas = $state(true);
@@ -145,29 +145,29 @@
 	<NavBar
 		{activeId}
 		{onCanvas}
-		person={PERSON}
+		person={data.person}
 		navSections={NAV_SECTIONS}
 		onScrollToAnchor={scrollToAnchor}
 		onOpenCmdPalette={openCmdPalette}
 	/>
 
 	<HeroSection
-		person={PERSON}
+		person={data.person}
 		onScrollToWork={() => scrollToAnchor('work')}
 		onScrollToContact={() => scrollToAnchor('contact')}
 	/>
 
-	<WorkSection projects={PROJECTS} projectTags={PROJECT_TAGS} />
+	<WorkSection projects={data.projects} projectTags={PROJECT_TAGS} />
 
-	<AboutSection person={PERSON} facts={FACTS} />
+	<AboutSection person={data.person} facts={data.facts} />
 
-	<ExperienceSection experience={EXPERIENCE} />
+	<ExperienceSection experience={data.experience} />
 
-	<StackSection stack={STACK} />
+	<StackSection stack={data.stack} />
 
-	<ContactSection person={PERSON} budgets={BUDGETS} />
+	<ContactSection person={data.person} budgets={BUDGETS} />
 
-	<Footer person={PERSON} />
+	<Footer person={data.person} />
 
 	<CommandPalette
 		open={cmdOpen}
