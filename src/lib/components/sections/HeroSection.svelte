@@ -48,7 +48,7 @@
   }
   .hero-inner {
     position: relative; z-index: 1;
-    padding: 120px 0 140px;
+    padding-block: 120px 140px;
     display: grid; grid-template-columns: 1fr; gap: var(--space-12);
   }
   .hero h1 {
