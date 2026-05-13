@@ -88,7 +88,7 @@
 }
 
 /* ============================================================================
-   Portfolio Design System — UEDS tokens + component CSS
+   Portfolio Design System - UEDS tokens + component CSS
    ============================================================================ */
 
 /* ── Color tokens ── */
@@ -296,7 +296,7 @@
 /* nav-right groups cta + hamburger */
 .nav-right { display: flex; align-items: center; gap: 12px; }
 
-/* hamburger — hidden on desktop */
+/* hamburger - hidden on desktop */
 .hamburger {
   display: none; flex-direction: column; justify-content: center; align-items: center;
   gap: 5px; width: 40px; height: 40px; padding: 0;
