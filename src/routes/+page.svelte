@@ -12,7 +12,6 @@
 	import WorkSection from '$lib/components/sections/WorkSection.svelte';
 
 	import { BUDGETS, CMD_ITEMS, NAV_SECTIONS } from '$lib/data/navigation';
-	import { PROJECT_TAGS } from '$lib/data/projects';
 	import type { CmdItem } from '$lib/interfaces';
 	import type { PageData } from './$types';
 
@@ -142,32 +141,41 @@
 </svelte:head>
 
 <div class="portfolio">
-	<NavBar
-		{activeId}
-		{onCanvas}
-		person={data.person}
-		navSections={NAV_SECTIONS}
-		onScrollToAnchor={scrollToAnchor}
-		onOpenCmdPalette={openCmdPalette}
-	/>
+	{#await data.personData then { person, facts }}
+		<NavBar
+			{activeId}
+			{onCanvas}
+			{person}
+			navSections={NAV_SECTIONS}
+			onScrollToAnchor={scrollToAnchor}
+			onOpenCmdPalette={openCmdPalette}
+		/>
 
-	<HeroSection
-		person={data.person}
-		onScrollToWork={() => scrollToAnchor('work')}
-		onScrollToContact={() => scrollToAnchor('contact')}
-	/>
+		<HeroSection
+			{person}
+			onScrollToWork={() => scrollToAnchor('work')}
+			onScrollToContact={() => scrollToAnchor('contact')}
+		/>
 
-	<WorkSection projects={data.projects} projectTags={PROJECT_TAGS} />
+		{#await data.projects then projects}
+			{@const projectTags = ['All', ...new Set(projects.flatMap((p) => p.tags))]}
+			<WorkSection {projects} {projectTags} />
+		{/await}
 
-	<AboutSection person={data.person} facts={data.facts} />
+		<AboutSection {person} {facts} />
 
-	<ExperienceSection experience={data.experience} />
+		{#await data.experience then experience}
+			<ExperienceSection {experience} />
+		{/await}
 
-	<StackSection stack={data.stack} />
+		{#await data.stack then stack}
+			<StackSection {stack} />
+		{/await}
 
-	<ContactSection person={data.person} budgets={BUDGETS} />
+		<ContactSection {person} budgets={BUDGETS} />
 
-	<Footer person={data.person} />
+		<Footer {person} />
+	{/await}
 
 	<CommandPalette
 		open={cmdOpen}

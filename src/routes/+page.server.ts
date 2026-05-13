@@ -8,22 +8,9 @@ import { EXPERIENCE } from '$lib/data/experience';
 import { STACK } from '$lib/data/stack';
 import { PERSON, FACTS } from '$lib/data/person';
 
-export const load: PageServerLoad = async () => {
-	const [projectsResult, experienceResult, stackResult, personResult] = await Promise.allSettled([
-		getWorkProjects(),
-		getExperience(),
-		getStack(),
-		getSitePerson()
-	]);
-
-	const personData =
-		personResult.status === 'fulfilled' ? personResult.value : { person: PERSON, facts: FACTS };
-
-	return {
-		projects: projectsResult.status === 'fulfilled' ? projectsResult.value : PROJECTS,
-		experience: experienceResult.status === 'fulfilled' ? experienceResult.value : EXPERIENCE,
-		stack: stackResult.status === 'fulfilled' ? stackResult.value : STACK,
-		person: personData.person,
-		facts: personData.facts
-	};
-};
+export const load: PageServerLoad = () => ({
+	personData: getSitePerson().catch(() => ({ person: PERSON, facts: FACTS })),
+	projects: getWorkProjects().catch(() => PROJECTS),
+	experience: getExperience().catch(() => EXPERIENCE),
+	stack: getStack().catch(() => STACK)
+});
