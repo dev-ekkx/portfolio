@@ -96,7 +96,7 @@
 <section class="hero" id="top">
 	<div class="hero-grid-bg" aria-hidden="true"></div>
 
-	<div class="shell hero-inner">
+	<div class="container hero-inner">
 		<div>
 			<span class="eyebrow">{person.role}, est. 2017</span>
 			<h1>

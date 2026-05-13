@@ -113,7 +113,7 @@
 </style>
 
 <section id="work" class="p-section">
-	<div class="shell">
+	<div class="container">
 		<div class="section-title-row reveal">
 			<div class="left">
 				<span class="eyebrow">01 · Selected work</span>

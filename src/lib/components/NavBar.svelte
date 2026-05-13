@@ -162,7 +162,7 @@
 <svelte:window onkeydown={handleKeydown} />
 
 <nav class={`nav ${onCanvas ? 'on-canvas' : ''}`}>
-	<div class="shell nav-inner">
+	<div class="container nav-inner">
 		<button
 			class="brand"
 			onclick={() => { onScrollToAnchor('top'); closeMenu(); }}

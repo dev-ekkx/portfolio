@@ -24,7 +24,7 @@
 </style>
 
 <section id="experience" class="p-section">
-	<div class="shell">
+	<div class="container">
 		<div class="section-title-row reveal">
 			<div class="left">
 				<span class="eyebrow">03 · Experience</span>

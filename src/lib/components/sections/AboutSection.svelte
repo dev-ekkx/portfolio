@@ -37,7 +37,7 @@
 </style>
 
 <section id="about" class="p-section bg-alt">
-	<div class="shell">
+	<div class="container">
 		<div class="section-title-row reveal">
 			<div class="left">
 				<span class="eyebrow">02 · About</span>

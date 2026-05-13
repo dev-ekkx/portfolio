@@ -56,7 +56,7 @@
 </style>
 
 <section id="stack" class="p-section bg-canvas">
-	<div class="shell">
+	<div class="container">
 		<div class="section-title-row reveal">
 			<div class="left">
 				<span class="eyebrow">04 · Stack</span>

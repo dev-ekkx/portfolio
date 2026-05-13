@@ -10,7 +10,7 @@
 
 <footer class="bg-canvas-deep text-canvas-fg-muted pt-10 pb-9 border-t border-canvas-line">
 	<div
-		class="shell flex items-center justify-between flex-wrap gap-4 font-mono text-xs text-canvas-fg-muted tracking-[0.02em]"
+		class="container flex items-center justify-between flex-wrap gap-4 font-mono text-xs text-canvas-fg-muted tracking-[0.02em]"
 	>
 		<span>© 2026 {person.name}, built with care in Accra</span>
 		<div class="flex gap-1.5">
