@@ -68,7 +68,19 @@ if (browser) {
 export const projects = {
 	subscribe,
 	set,
-	add: (project: Project) => update((items) => [project, ...items]),
+	load: async () => {
+		try {
+			const res = await fetch('/api/projects');
+			if (res.ok) {
+				const data = (await res.json()) as Project[];
+				if (data.length) set(data);
+			}
+		} catch {
+			// keep current state on network error
+		}
+	},
+	add: (project: Omit<Project, 'id'>) =>
+		update((items) => [{ ...project, id: crypto.randomUUID() }, ...items]),
 	updateProject: (project: Project) =>
 		update((items) => items.map((item) => (item.id === project.id ? project : item))),
 	remove: (id: string) => update((items) => items.filter((item) => item.id !== id)),
