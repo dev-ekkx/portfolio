@@ -341,7 +341,7 @@
   display: flex; align-items: center; gap: 14px;
   padding: 14px 0; border-bottom: 1px solid var(--line);
   font-family: var(--font-display); font-size: 18px; font-weight: var(--fw-semibold);
-  color: inherit; opacity: .65;
+  color: inherit; opacity: .65; cursor: pointer;
   transition: opacity 180ms ease, color 180ms ease;
 }
 .mob-nav a:last-child { border-bottom: none; }
