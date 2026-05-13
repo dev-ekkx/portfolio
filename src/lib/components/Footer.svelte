@@ -8,11 +8,19 @@
 	let { person }: Props = $props();
 </script>
 
-<footer class="p-footer">
-	<div class="shell footer-inner">
+<footer class="bg-canvas-deep text-canvas-fg-muted pt-10 pb-9 border-t border-canvas-line">
+	<div
+		class="shell flex items-center justify-between flex-wrap gap-4 font-mono text-xs text-canvas-fg-muted tracking-[0.02em]"
+	>
 		<span>© 2026 {person.name}, built with care in Accra</span>
-		<div class="socials">
-			<a href={person.links.github} aria-label="GitHub" target="_blank" rel="noreferrer">
+		<div class="flex gap-1.5">
+			<a
+				href={person.links.github}
+				aria-label="GitHub"
+				target="_blank"
+				rel="noreferrer"
+				class="social-link"
+			>
 				<svg
 					width="16"
 					height="16"
@@ -27,7 +35,13 @@
 					/><path d="M9 18c-4.51 2-5-2-7-2" /></svg
 				>
 			</a>
-			<a href={person.links.linkedin} aria-label="LinkedIn" target="_blank" rel="noreferrer">
+			<a
+				href={person.links.linkedin}
+				aria-label="LinkedIn"
+				target="_blank"
+				rel="noreferrer"
+				class="social-link"
+			>
 				<svg
 					width="16"
 					height="16"
@@ -42,7 +56,13 @@
 					/><circle cx="4" cy="4" r="2" /></svg
 				>
 			</a>
-			<a href={person.links.twitter} aria-label="Twitter / X" target="_blank" rel="noreferrer">
+			<a
+				href={person.links.twitter}
+				aria-label="Twitter / X"
+				target="_blank"
+				rel="noreferrer"
+				class="social-link"
+			>
 				<svg
 					width="16"
 					height="16"
@@ -56,6 +76,16 @@
 				>
 			</a>
 		</div>
-		<span style="font-family:var(--font-mono);">v2026.05 · all systems nominal</span>
+		<span class="font-mono">v2026.05 · all systems nominal</span>
 	</div>
 </footer>
+
+<style>
+  .social-link {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid var(--canvas-line);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--canvas-fg); transition: 140ms var(--easing-default);
+  }
+  .social-link:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+</style>

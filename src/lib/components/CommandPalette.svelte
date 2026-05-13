@@ -45,6 +45,21 @@
 	}
 </script>
 
+<style>
+  .cmd-overlay { position: fixed; inset: 0; background: rgba(8,40,59,.5); backdrop-filter: blur(8px); z-index: var(--z-modal); display: flex; align-items: flex-start; justify-content: center; padding-top: 14vh; opacity: 0; pointer-events: none; transition: 200ms var(--easing-default); }
+  .cmd-overlay.open { opacity: 1; pointer-events: auto; }
+  .cmd-panel { width: 560px; max-width: 92vw; background: var(--surface-card); border-radius: var(--radius-xl); border: 1px solid var(--line); box-shadow: var(--shadow-2xl); overflow: hidden; transform: translateY(8px); transition: 220ms var(--easing-default); }
+  .cmd-overlay.open .cmd-panel { transform: translateY(0); }
+  .cmd-input { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+  .cmd-input input { flex: 1; border: 0; outline: 0; background: transparent; font-family: var(--font-body); font-size: 16px; color: var(--ink); }
+  .cmd-items { max-height: 56vh; overflow: auto; padding: 8px; }
+  .cmd-item { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: var(--radius-md); cursor: pointer; color: var(--ink); font-size: 14px; }
+  .cmd-item:hover, .cmd-item.active { background: var(--surface-alt); }
+  .cmd-item .ico { color: var(--accent); display: inline-flex; }
+  .cmd-item .meta { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); }
+  .cmd-foot { padding: 10px 14px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); display: flex; gap: 16px; justify-content: space-between; }
+</style>
+
 <div
 	class={`cmd-overlay ${open ? 'open' : ''}`}
 	onclick={onClose}

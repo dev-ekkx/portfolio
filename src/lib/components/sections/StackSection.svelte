@@ -10,6 +10,7 @@
 
 	let stackGridRef: HTMLElement;
 
+
 	onMount(() => {
 		(async () => {
 			const { gsap } = await import('gsap');
@@ -39,6 +40,20 @@
 		})();
 	});
 </script>
+
+<style>
+  .stack-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 40px; }
+  .stack-group { display: flex; flex-direction: column; gap: 20px; }
+  .stack-group .gh { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 14px; border-bottom: 1px solid var(--canvas-line); }
+  .stack-group .gh .gname { font-family: var(--font-display); font-size: 20px; font-weight: var(--fw-medium); color: var(--canvas-fg); letter-spacing: -0.01em; }
+  .stack-group .gh .gnum { font-family: var(--font-mono); font-size: 11px; color: var(--canvas-fg-muted); letter-spacing: 0.06em; }
+  .stack-group .gnote { font-family: var(--font-mono); font-size: 11px; color: var(--canvas-fg-muted); letter-spacing: 0.04em; text-transform: uppercase; margin: -8px 0 -4px; }
+  .stack-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .stack-pill { font-family: var(--font-body); font-size: 13px; font-weight: var(--fw-medium); color: var(--canvas-fg); padding: 7px 12px; border-radius: var(--radius-md); background: rgba(255,255,255,.04); border: 1px solid var(--canvas-line); display: inline-flex; align-items: center; gap: 8px; cursor: default; transition: 220ms var(--easing-default); will-change: transform, background, border-color; }
+  .stack-pill:hover { background: color-mix(in srgb, var(--accent) 18%, transparent); border-color: color-mix(in srgb, var(--accent) 60%, transparent); transform: translateY(-2px); }
+  @media (max-width: 980px) { .stack-grid { grid-template-columns: repeat(2,1fr); gap: 32px; } }
+  @media (max-width: 540px) { .stack-grid { grid-template-columns: 1fr; gap: 28px; } }
+</style>
 
 <section id="stack" class="p-section bg-canvas">
 	<div class="shell">

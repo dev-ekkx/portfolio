@@ -10,6 +10,7 @@
 
 	let copied = $state(false);
 
+
 	let formData = $state({
 		name: '',
 		email: '',
@@ -84,6 +85,65 @@
 		}
 	}
 </script>
+
+<style>
+  /* ── CTA section ── */
+  .cta { background: var(--canvas); color: var(--canvas-fg); padding: 140px 0 96px; position: relative; overflow: hidden; }
+  .cta::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--accent) 18%, transparent) 0%, transparent 50%); pointer-events: none; }
+  .cta .section-title { font-size: clamp(40px, 5.4vw, 72px); }
+  .cta .section-title .accent { color: var(--accent); }
+
+  /* ── Email card ── */
+  .email-card { display: inline-flex; align-items: center; gap: 16px; padding: 14px 16px 14px 20px; background: rgba(255,255,255,.04); border: 1px solid var(--canvas-line); border-radius: var(--radius-md); color: var(--canvas-fg); font-family: var(--font-mono); font-size: 14px; cursor: pointer; transition: 160ms var(--easing-default); width: 100%; }
+  .email-card:hover { background: rgba(255,255,255,.08); border-color: var(--accent); }
+  .email-card .copy { padding: 6px 10px; border-left: 1px solid var(--canvas-line); margin-left: 6px; color: var(--canvas-fg-muted); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; }
+
+  /* ── Contact layout ── */
+  .contact-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.3fr); gap: 80px; align-items: start; }
+  @media (max-width: 880px) { .contact-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+  .contact-side .or-divider { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--canvas-fg-muted); margin: 28px 0 18px; display: flex; align-items: center; gap: 12px; }
+  .contact-side .or-divider::before, .contact-side .or-divider::after { content: ""; flex: 1; height: 1px; background: var(--canvas-line); }
+  .contact-side .quick-links { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+  .contact-side .quick-links a { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: 1px solid var(--canvas-line); border-radius: var(--radius-md); background: rgba(255,255,255,.03); color: var(--canvas-fg); font-size: 14px; font-weight: var(--fw-medium); transition: 160ms var(--easing-default); }
+  .contact-side .quick-links a:hover { border-color: var(--accent); background: rgba(255,255,255,.06); transform: translateY(-1px); }
+  .contact-side .quick-links a .lbl { flex: 1; }
+  .contact-side .quick-links a .sub { font-family: var(--font-mono); font-size: 11px; color: var(--canvas-fg-muted); letter-spacing: 0.04em; }
+
+  /* ── Contact form ── */
+  .contact-form { background: rgba(255,255,255,.03); border: 1px solid var(--canvas-line); border-radius: var(--radius-xl); padding: 32px; display: grid; gap: 18px; position: relative; backdrop-filter: blur(8px); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 540px) { .form-row { grid-template-columns: 1fr; } }
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field label, .field .field-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-fg-muted); display: flex; align-items: center; justify-content: space-between; }
+  .field label .req { color: var(--accent); }
+  .field input, .field textarea, .field select { font-family: var(--font-body); font-size: 15px; color: var(--canvas-fg); background: rgba(255,255,255,.04); border: 1px solid var(--canvas-line); border-radius: var(--radius-md); padding: 12px 14px; outline: none; transition: 160ms var(--easing-default); width: 100%; resize: vertical; }
+  .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,.32); }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); background: rgba(255,255,255,.07); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 20%, transparent); }
+  .field.invalid input, .field.invalid textarea { border-color: var(--color-error-500); }
+  .field .hint { font-size: 11px; color: var(--canvas-fg-muted); font-family: var(--font-mono); }
+  .field .err { font-size: 12px; color: var(--color-error-500); }
+  .budget-options { display: flex; gap: 6px; flex-wrap: wrap; }
+  .budget-options input { display: none; }
+  .budget-options label.opt { font-family: var(--font-body); font-size: 13px; padding: 8px 14px; border: 1px solid var(--canvas-line); border-radius: var(--radius-full); color: var(--canvas-fg-muted); cursor: pointer; transition: 140ms var(--easing-default); display: inline-flex; align-items: center; }
+  .budget-options input:checked + label.opt { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .submit-row { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; gap: 16px; flex-wrap: wrap; }
+  .submit-row .powered { font-family: var(--font-mono); font-size: 11px; color: var(--canvas-fg-muted); letter-spacing: 0.04em; display: inline-flex; align-items: center; gap: 8px; }
+  .submit-row .powered b { color: var(--canvas-fg); font-weight: 600; }
+  .form-submit { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border: 0; border-radius: var(--radius-md); background: var(--accent); color: #fff; font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: 160ms var(--easing-default); }
+  .form-submit:hover { background: var(--accent-strong); transform: translateY(-1px); }
+  .form-submit:disabled { opacity: 0.7; cursor: progress; transform: none; }
+  .form-success, .form-error { padding: 16px 18px; border-radius: var(--radius-md); font-family: var(--font-body); font-size: 14px; display: flex; align-items: center; gap: 12px; }
+  .form-success { background: color-mix(in srgb, var(--color-success-500) 18%, transparent); color: var(--canvas-fg); border: 1px solid color-mix(in srgb, var(--color-success-500) 40%, transparent); }
+  .form-error { background: color-mix(in srgb, var(--color-error-500) 18%, transparent); color: var(--canvas-fg); border: 1px solid color-mix(in srgb, var(--color-error-500) 40%, transparent); }
+
+  /* Sending dots animation */
+  .dot-pulse {
+    width: 4px; height: 4px; border-radius: 50%; background: #fff;
+    animation: dp 1.2s infinite ease-in-out;
+  }
+  @keyframes dp { 0%, 80%, 100% { opacity: 0.2; } 40% { opacity: 1; } }
+</style>
 
 <section id="contact" class="cta">
 	<div class="shell">
@@ -381,9 +441,7 @@
 								Sending
 								<span style="display:inline-flex;gap:4px;margin-left:6px;">
 									{#each [0, 1, 2] as i}
-										<span
-											style={`width:4px;height:4px;border-radius:50%;background:#fff;animation:dp 1.2s ${i * 0.15}s infinite ease-in-out`}
-										></span>
+										<span class="dot-pulse" style={`animation-delay:${i * 0.15}s`}></span>
 									{/each}
 								</span>
 							{:else}

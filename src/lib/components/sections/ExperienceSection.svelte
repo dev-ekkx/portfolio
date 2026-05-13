@@ -8,6 +8,21 @@
 	let { experience }: Props = $props();
 </script>
 
+<style>
+  .timeline { position: relative; padding-left: 28px; max-width: 880px; }
+  .timeline::before { content: ""; position: absolute; left: 7px; top: 12px; bottom: 12px; width: 1px; background: var(--line); }
+  .tl-item { position: relative; padding: 22px 0 22px 28px; display: grid; grid-template-columns: 140px minmax(0,1fr) auto; gap: 24px; align-items: baseline; }
+  .tl-item::before { content: ""; position: absolute; left: -28px; top: 28px; width: 14px; height: 14px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); }
+  .tl-item.current::before { background: var(--accent); }
+  .tl-item.current::after { content: ""; position: absolute; left: -28px; top: 28px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); opacity: .25; animation: blink 2.4s infinite ease-in-out; }
+  .tl-item .when { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); letter-spacing: 0.04em; }
+  .tl-item .role { font-family: var(--font-display); font-size: 22px; font-weight: var(--fw-semibold); letter-spacing: -0.015em; color: var(--ink); margin: 0; }
+  .tl-item .co { font-family: var(--font-body); font-size: 14px; color: var(--ink-muted); margin-top: 4px; }
+  .tl-item .body { font-size: 14.5px; line-height: 1.6; color: var(--ink); opacity: .82; margin: 8px 0 0; }
+  .tl-item .place { font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); justify-self: end; text-transform: uppercase; letter-spacing: 0.04em; }
+  @media (max-width: 720px) { .tl-item { grid-template-columns: 1fr; gap: 6px; } .tl-item .place { justify-self: start; } }
+</style>
+
 <section id="experience" class="p-section">
 	<div class="shell">
 		<div class="section-title-row reveal">
