@@ -15,6 +15,11 @@
 				secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-xs",
 				ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
 				link: "text-primary underline-offset-4 hover:underline",
+				"site-primary":
+					"border border-transparent bg-accent-site text-white hover:bg-accent-strong hover:-translate-y-px hover:shadow-[0_12px_24px_-10px_color-mix(in_srgb,var(--accent)_60%,transparent)]",
+				"ghost-canvas":
+					"border border-white/[0.18] bg-transparent text-canvas-fg hover:bg-white/[0.06] hover:border-white/[0.32]",
+				"ghost-surface": "border border-line bg-transparent text-ink hover:bg-surface-alt",
 			},
 			size: {
 				default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -23,6 +28,7 @@
 				icon: "size-9",
 				"icon-sm": "size-8",
 				"icon-lg": "size-10",
+				site: "px-[22px] py-[14px] text-sm leading-none gap-[10px] rounded-[var(--radius-md)] duration-[140ms]",
 			},
 		},
 		defaultVariants: {

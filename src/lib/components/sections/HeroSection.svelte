@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Person } from '$lib/interfaces';
 	import { onMount } from 'svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
 
 	const COLS = 26;
 	const ROWS = 14;
@@ -110,7 +111,7 @@
 				fast response times, and cloud infrastructure that holds under pressure.
 			</p>
 			<div class="hero-actions">
-				<button onclick={onScrollToWork} class="btn btn-primary">
+				<Button variant="site-primary" size="site" onclick={onScrollToWork}>
 					View selected work
 					<svg
 						width="16"
@@ -122,8 +123,8 @@
 						stroke-linecap="round"
 						stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg
 					>
-				</button>
-				<button onclick={onScrollToContact} class="btn btn-ghost-on-canvas"> Get in touch </button>
+				</Button>
+				<Button variant="ghost-canvas" size="site" onclick={onScrollToContact}>Get in touch</Button>
 			</div>
 			<div class="hero-meta">
 				<span class="item live"

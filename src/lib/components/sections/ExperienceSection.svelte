@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ExperienceItem } from '$lib/interfaces';
+	import Button from '$lib/components/ui/button/button.svelte';
 
 	interface Props {
 		experience: ExperienceItem[];
@@ -49,10 +50,11 @@
 			{/each}
 		</div>
 		<div class="reveal">
-			<a
+			<Button
+				variant="ghost-surface"
+				size="site"
 				href="/resume.pdf"
-				class="btn btn-ghost"
-				style="margin-top:48px;display:inline-flex;"
+				style="margin-top:48px;"
 				target="_blank"
 				rel="noreferrer"
 			>
@@ -70,7 +72,7 @@
 					/><path d="M12 15V3" /></svg
 				>
 				Download resume (PDF)
-			</a>
+			</Button>
 		</div>
 	</div>
 </section>

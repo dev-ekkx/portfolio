@@ -293,48 +293,6 @@
 	display: none;
 }
 
-/* ── Buttons (shared) ── */
-.btn {
-	display: inline-flex;
-	align-items: center;
-	gap: 10px;
-	padding: 14px 22px;
-	font-family: var(--font-body);
-	font-size: 14px;
-	font-weight: var(--fw-medium);
-	border-radius: var(--radius-md);
-	border: 1px solid transparent;
-	cursor: pointer;
-	transition: 140ms var(--easing-default);
-	line-height: 1;
-}
-.btn-primary {
-	background: var(--accent);
-	color: #fff;
-}
-.btn-primary:hover {
-	background: var(--accent-strong);
-	transform: translateY(-1px);
-	box-shadow: 0 12px 24px -10px color-mix(in srgb, var(--accent) 60%, transparent);
-}
-.btn-ghost-on-canvas {
-	background: transparent;
-	color: var(--canvas-fg);
-	border-color: rgba(255, 255, 255, 0.18);
-}
-.btn-ghost-on-canvas:hover {
-	background: rgba(255, 255, 255, 0.06);
-	border-color: rgba(255, 255, 255, 0.32);
-}
-.btn-ghost {
-	background: transparent;
-	color: var(--ink);
-	border-color: var(--line);
-}
-.btn-ghost:hover {
-	background: var(--surface-alt);
-}
-
 /* ── Section frame (shared) ── */
 section.p-section {
 	padding: 120px 0;
