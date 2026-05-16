@@ -1,10 +1,6 @@
 <script lang="ts">
 	import type { Person } from '$lib/interfaces';
-	import { onMount } from 'svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
-
-	const COLS = 26;
-	const ROWS = 14;
 
 	interface Props {
 		person: Person;
@@ -13,26 +9,6 @@
 	}
 
 	let { person, onScrollToWork, onScrollToContact }: Props = $props();
-
-	onMount(() => {
-		let alive = true;
-		const tids: ReturnType<typeof setTimeout>[] = [];
-		const tweens: { kill?: () => void }[] = [];
-		const after = (fn: () => void, ms: number) => {
-			const id = setTimeout(fn, ms);
-			tids.push(id);
-		};
-
-		(async () => {
-			const { gsap } = await import('gsap');
-		})();
-
-		return () => {
-			alive = false;
-			tids.forEach(clearTimeout);
-			tweens.forEach((t) => t.kill?.());
-		};
-	});
 </script>
 
 <style>
