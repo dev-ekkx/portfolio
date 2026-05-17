@@ -17,99 +17,35 @@
 </script>
 
 <style>
-  /* ── Filter row ── */
-  .filter-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
-  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
-  .chip-btn {
-    font-family: var(--font-body); font-size: 13px; font-weight: var(--fw-medium);
-    padding: 8px 14px; border-radius: var(--radius-full);
-    background: transparent; border: 1px solid var(--line);
-    color: var(--ink-muted); cursor: pointer; transition: 120ms ease-out;
+  /* pseudo-elements that cannot be expressed in Tailwind */
+  .thumb-tradewind .layer::before,
+  .thumb-tradewind .layer::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    background: rgba(255,255,255,.10);
+    border-radius: 3px;
+    height: 8px;
   }
-  .chip-btn:hover { color: var(--ink); border-color: var(--ink-muted); }
-  .chip-btn.active { background: var(--ink); color: var(--surface); border-color: var(--ink); }
-  .chip-btn .count { opacity: .55; margin-left: 6px; font-family: var(--font-mono); font-size: 11px; }
-  .view-toggle { display: inline-flex; gap: 2px; padding: 3px; background: var(--surface-alt); border-radius: var(--radius-md); border: 1px solid var(--line); }
-  .view-toggle button {
-    border: 0; background: transparent; padding: 6px 10px; border-radius: 5px;
-    font-size: 12px; color: var(--ink-muted); cursor: pointer;
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: var(--font-body); font-weight: var(--fw-medium);
+  .thumb-tradewind .layer::before { top: 18px; width: 50%; background: var(--accent); }
+  .thumb-tradewind .layer::after  { top: 36px; height: 4px; }
+
+  .thumb-voyager .badge::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-success-500);
   }
-  .view-toggle button.active { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-xs); }
 
-  /* ── Project grid ── */
-  .projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 28px; }
-  .projects-list { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
-  @media (max-width: 880px) { .projects-grid { grid-template-columns: 1fr; } }
-
-  .project-card {
-    background: var(--surface-card); border: 1px solid var(--line);
-    border-radius: var(--radius-xl); padding: 28px 28px 32px;
-    display: flex; flex-direction: column;
-    position: relative; overflow: hidden; cursor: pointer;
-    transition: 220ms var(--easing-default);
+  /* child-selector hover: arrow rotation on row hover */
+  .proj-row:hover .arr {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    transform: rotate(-45deg);
   }
-  .project-card:hover {
-    transform: translateY(-3px);
-    border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
-    box-shadow: 0 24px 48px -28px color-mix(in srgb, var(--ink) 30%, transparent);
-  }
-  .project-card .meta-row {
-    display: flex; align-items: center; justify-content: space-between;
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em;
-    color: var(--ink-muted); text-transform: uppercase;
-  }
-  .project-card h3 {
-    font-family: var(--font-display); font-size: 28px; font-weight: var(--fw-semibold);
-    letter-spacing: -0.018em; margin: 14px 0 8px; color: var(--ink);
-  }
-  .project-card .role { font-size: 13px; color: var(--ink-muted); margin: 0 0 24px; }
-  .project-card .blurb { font-size: 15px; line-height: 1.55; color: var(--ink); opacity: .82; margin: 18px 0 24px; max-width: 52ch; }
-  .project-card .stats { display: flex; gap: 18px; margin-top: auto; border-top: 1px dashed var(--line); padding-top: 18px; }
-  .project-card .stat .v { font-family: var(--font-display); font-size: 22px; font-weight: var(--fw-semibold); color: var(--ink); letter-spacing: -0.01em; line-height: 1.1; }
-  .project-card .stat .l { font-size: 11px; color: var(--ink-muted); letter-spacing: 0.04em; text-transform: uppercase; margin-top: 4px; }
-
-  /* ── Thumb variants ── */
-  .thumb { height: 220px; border-radius: var(--radius-lg); position: relative; overflow: hidden; margin: 4px 0; border: 1px solid var(--line); }
-  .thumb.tradewind {
-    background: radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--accent) 40%, transparent), transparent 50%),
-                linear-gradient(135deg, var(--color-blue-900) 0%, var(--color-blue-700) 100%);
-  }
-  .thumb.tradewind .layer { position: absolute; inset: 32px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.10); border-radius: 6px; backdrop-filter: blur(4px); }
-  .thumb.tradewind .layer::before, .thumb.tradewind .layer::after { content: ""; position: absolute; left: 16px; right: 16px; background: rgba(255,255,255,.10); border-radius: 3px; height: 8px; }
-  .thumb.tradewind .layer::before { top: 18px; width: 50%; background: var(--accent); }
-  .thumb.tradewind .layer::after  { top: 36px; height: 4px; }
-  .thumb.tradewind .bars { position: absolute; left: 48px; right: 48px; bottom: 48px; display: flex; gap: 8px; align-items: flex-end; height: 70px; }
-  .thumb.tradewind .bars span { flex: 1; background: rgba(255,255,255,.20); border-radius: 2px 2px 0 0; }
-  .thumb.tradewind .bars span:nth-child(3) { background: var(--accent); }
-
-  .thumb.larch { background: var(--color-gray-50); display: flex; align-items: center; justify-content: center; }
-  .thumb.larch .doc { width: 56%; aspect-ratio: 3/4; background: var(--surface-card); border-radius: 6px; box-shadow: 0 18px 40px -16px rgba(8,40,59,.18); position: relative; padding: 18px 16px; display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--line); }
-  .thumb.larch .doc .ln { height: 6px; background: var(--color-gray-200); border-radius: 2px; }
-  .thumb.larch .doc .ln.title { width: 60%; height: 9px; background: var(--ink); margin-bottom: 6px; }
-  .thumb.larch .doc .ln.short { width: 35%; }
-  .thumb.larch .lock { position: absolute; top: -14px; right: -14px; width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 10px 24px -8px color-mix(in srgb, var(--accent) 50%, transparent); }
-
-  .thumb.voyager { background: linear-gradient(135deg, #0E2434 0%, #08283B 100%); position: relative; }
-  .thumb.voyager .chart { position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px); background-size: 40px 28px; }
-  .thumb.voyager svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .thumb.voyager .badge { position: absolute; top: 18px; left: 18px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); color: #fff; padding: 6px 10px; border-radius: 20px; font-family: var(--font-mono); font-size: 11px; display: inline-flex; align-items: center; gap: 6px; }
-  .thumb.voyager .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--color-success-500); }
-
-  .thumb-tag { position: absolute; left: 18px; bottom: 18px; background: rgba(0,0,0,.45); color: #fff; padding: 4px 10px; border-radius: 20px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.02em; backdrop-filter: blur(6px); }
-
-  /* ── List rows ── */
-  .proj-row { display: grid; grid-template-columns: 80px minmax(0,2fr) minmax(0,2fr) minmax(0,1.2fr) auto; gap: 28px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--line); cursor: pointer; transition: 160ms var(--easing-default); color: var(--ink); }
-  .proj-row:hover { padding-left: 12px; padding-right: 12px; background: var(--surface-alt); }
-  .proj-row .yr { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); letter-spacing: 0.04em; }
-  .proj-row .ttl { font-family: var(--font-display); font-size: 22px; font-weight: var(--fw-semibold); letter-spacing: -0.015em; }
-  .proj-row .ttl small { display: block; font-family: var(--font-body); font-weight: var(--fw-regular); font-size: 12px; color: var(--ink-muted); margin-top: 4px; }
-  .proj-row .desc { font-size: 14px; color: var(--ink-muted); line-height: 1.55; }
-  .proj-row .tg { display: flex; gap: 6px; flex-wrap: wrap; }
-  .proj-row .arr { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); display: inline-flex; align-items: center; justify-content: center; color: var(--ink-muted); transition: 160ms var(--easing-default); }
-  .proj-row:hover .arr { background: var(--accent); color: #fff; border-color: var(--accent); transform: rotate(-45deg); }
-  @media (max-width: 900px) { .proj-row { grid-template-columns: 60px 1fr auto; gap: 16px; } .proj-row .desc, .proj-row .tg { display: none; } }
 </style>
 
 <section id="work" class="p-section">
@@ -125,12 +61,22 @@
 			</p>
 		</div>
 
-		<div class="filter-row reveal">
-			<div class="chips">
+		<!-- Filter row -->
+		<div class="reveal flex items-center justify-between gap-4 mb-8 flex-wrap">
+			<!-- Chips -->
+			<div class="flex gap-2 flex-wrap">
 				{#each projectTags as t}
-					<button class={`chip-btn ${filter === t ? 'active' : ''}`} onclick={() => (filter = t)}>
+					<button
+						class={[
+							'[font-family:var(--font-body)] text-[13px] font-medium px-[14px] py-2 rounded-full border cursor-pointer transition-[120ms_ease-out]',
+							filter === t
+								? 'bg-ink text-surface border-ink'
+								: 'bg-transparent border-line text-ink-muted hover:text-ink hover:border-ink-muted'
+						].join(' ')}
+						onclick={() => (filter = t)}
+					>
 						{t}
-						<span class="count"
+						<span class="opacity-55 ml-[6px] [font-family:var(--font-mono)] text-[11px]"
 							>{t === 'All'
 								? projects.length
 								: projects.filter((p) => p.tags.includes(t)).length}</span
@@ -138,9 +84,20 @@
 					</button>
 				{/each}
 			</div>
-			<div class="view-toggle" role="tablist" aria-label="Project view">
+
+			<!-- View toggle -->
+			<div
+				class="inline-flex gap-[2px] p-[3px] bg-surface-alt rounded-md border border-line"
+				role="tablist"
+				aria-label="Project view"
+			>
 				<button
-					class={view === 'cards' ? 'active' : ''}
+					class={[
+						'border-0 px-[10px] py-[6px] rounded-[5px] text-[12px] cursor-pointer inline-flex items-center gap-[6px] [font-family:var(--font-body)] font-medium',
+						view === 'cards'
+							? 'bg-surface text-ink shadow-[var(--shadow-xs)]'
+							: 'bg-transparent text-ink-muted'
+					].join(' ')}
 					onclick={() => (view = 'cards')}
 					aria-label="Card view"
 				>
@@ -170,7 +127,12 @@
 					Cards
 				</button>
 				<button
-					class={view === 'list' ? 'active' : ''}
+					class={[
+						'border-0 px-[10px] py-[6px] rounded-[5px] text-[12px] cursor-pointer inline-flex items-center gap-[6px] [font-family:var(--font-body)] font-medium',
+						view === 'list'
+							? 'bg-surface text-ink shadow-[var(--shadow-xs)]'
+							: 'bg-transparent text-ink-muted'
+					].join(' ')}
 					onclick={() => (view = 'list')}
 					aria-label="List view"
 				>
@@ -193,11 +155,17 @@
 		</div>
 
 		{#if view === 'cards'}
-			<div class="projects-grid">
+			<!-- Projects grid -->
+			<div class="grid grid-cols-2 max-[880px]:grid-cols-1 gap-[28px]">
 				{#each filteredProjects as p, i}
 					<div class="reveal" style={`transition-delay:${i * 60}ms`}>
-						<article class="project-card">
-							<div class="meta-row">
+						<article
+							class="bg-surface-card border border-line rounded-xl p-[28px_28px_32px] flex flex-col relative overflow-hidden cursor-pointer transition-[220ms_var(--easing-default)] hover:-translate-y-[3px] hover:border-[color-mix(in_srgb,var(--accent)_50%,var(--line))] hover:shadow-[0_24px_48px_-28px_color-mix(in_srgb,var(--ink)_30%,transparent)]"
+						>
+							<!-- Meta row -->
+							<div
+								class="flex items-center justify-between [font-family:var(--font-mono)] text-[11px] tracking-[0.04em] text-ink-muted uppercase"
+							>
 								<span>{p.year} · {p.tags.join(' / ')}</span>
 								<svg
 									width="16"
@@ -211,27 +179,61 @@
 									><path d="M7 17 17 7" /><path d="M7 7h10v10" /></svg
 								>
 							</div>
-							<h3>{p.title}</h3>
-							<p class="role">{p.role}</p>
 
+							<h3
+								class="[font-family:var(--font-display)] text-[28px] font-semibold tracking-[-0.018em] mt-[14px] mb-[8px] text-ink"
+							>
+								{p.title}
+							</h3>
+							<p class="text-[13px] text-ink-muted m-0 mb-6">{p.role}</p>
+
+							<!-- Thumb variants -->
 							{#if p.thumbVariant === 'tradewind'}
-								<div class="thumb tradewind">
-									<div class="layer"></div>
-									<div class="bars">
-										<span style="height:30%"></span><span style="height:55%"></span><span
+								<div
+									class="thumb-tradewind h-[220px] rounded-lg relative overflow-hidden my-1 border border-line"
+									style="background: radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--accent) 40%, transparent), transparent 50%), linear-gradient(135deg, var(--color-blue-900) 0%, var(--color-blue-700) 100%);"
+								>
+									<div
+										class="layer absolute inset-[32px] bg-white/[.04] border border-white/10 rounded-[6px] backdrop-blur-[4px]"
+									></div>
+									<div
+										class="bars absolute left-[48px] right-[48px] bottom-[48px] flex gap-2 items-end h-[70px]"
+									>
+										<span class="flex-1 bg-white/20 rounded-t-[2px]" style="height:30%"></span><span
+											class="flex-1 bg-white/20 rounded-t-[2px]"
+											style="height:55%"></span><span
+											class="flex-1 bg-[var(--accent)] rounded-t-[2px]"
 											style="height:80%"
 										></span>
-										<span style="height:45%"></span><span style="height:62%"></span><span
+										<span class="flex-1 bg-white/20 rounded-t-[2px]" style="height:45%"></span><span
+											class="flex-1 bg-white/20 rounded-t-[2px]"
+											style="height:62%"></span><span
+											class="flex-1 bg-white/20 rounded-t-[2px]"
 											style="height:70%"
 										></span>
-										<span style="height:40%"></span><span style="height:85%"></span>
+										<span class="flex-1 bg-white/20 rounded-t-[2px]" style="height:40%"></span><span
+											class="flex-1 bg-white/20 rounded-t-[2px]"
+											style="height:85%"></span>
 									</div>
-									<span class="thumb-tag">{p.thumbCaption}</span>
+									<span
+										class="absolute left-[18px] bottom-[18px] bg-black/45 text-white px-[10px] py-1 rounded-[20px] [font-family:var(--font-mono)] text-[11px] tracking-[0.02em] backdrop-blur-[6px]"
+										>{p.thumbCaption}</span
+									>
 								</div>
 							{:else if p.thumbVariant === 'voyager'}
-								<div class="thumb voyager">
-									<div class="chart"></div>
-									<svg viewBox="0 0 400 220" preserveAspectRatio="none">
+								<div
+									class="thumb-voyager h-[220px] rounded-lg relative overflow-hidden my-1 border border-line"
+									style="background: linear-gradient(135deg, #0E2434 0%, #08283B 100%);"
+								>
+									<div
+										class="chart absolute inset-0"
+										style="background-image: linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px); background-size: 40px 28px;"
+									></div>
+									<svg
+										class="absolute inset-0 w-full h-full"
+										viewBox="0 0 400 220"
+										preserveAspectRatio="none"
+									>
 										<defs>
 											<linearGradient id="vg{p.id}" x1="0" y1="0" x2="0" y2="1">
 												<stop offset="0%" stop-color="var(--accent)" stop-opacity="0.5" />
@@ -251,13 +253,28 @@
 										<circle cx="360" cy="35" r="5" fill="var(--accent)" />
 										<circle cx="360" cy="35" r="9" fill="var(--accent)" fill-opacity="0.25" />
 									</svg>
-									<div class="badge">live · {p.stats[2].v} {p.stats[2].l}</div>
-									<span class="thumb-tag">{p.thumbCaption}</span>
+									<div
+										class="badge absolute top-[18px] left-[18px] bg-white/[.06] border border-white/[.12] text-white px-[10px] py-[6px] rounded-[20px] [font-family:var(--font-mono)] text-[11px] inline-flex items-center gap-[6px]"
+									>
+										live · {p.stats[2].v}
+										{p.stats[2].l}
+									</div>
+									<span
+										class="absolute left-[18px] bottom-[18px] bg-black/45 text-white px-[10px] py-1 rounded-[20px] [font-family:var(--font-mono)] text-[11px] tracking-[0.02em] backdrop-blur-[6px]"
+										>{p.thumbCaption}</span
+									>
 								</div>
 							{:else}
-								<div class="thumb larch">
-									<div class="doc">
-										<div class="lock">
+								<div
+									class="h-[220px] rounded-lg relative overflow-hidden my-1 border border-line flex items-center justify-center"
+									style="background: var(--color-gray-50);"
+								>
+									<div
+										class="doc w-[56%] aspect-[3/4] bg-surface-card rounded-[6px] shadow-[0_18px_40px_-16px_rgba(8,40,59,.18)] relative p-[18px_16px] flex flex-col gap-2 border border-line"
+									>
+										<div
+											class="lock absolute top-[-14px] right-[-14px] w-[40px] h-[40px] rounded-full bg-[var(--accent)] text-white flex items-center justify-center text-[16px] shadow-[0_10px_24px_-8px_color-mix(in_srgb,var(--accent)_50%,transparent)]"
+										>
 											<svg
 												width="16"
 												height="16"
@@ -272,27 +289,42 @@
 												/></svg
 											>
 										</div>
-										<div class="ln title"></div>
-										<div class="ln"></div>
-										<div class="ln"></div>
-										<div class="ln short"></div>
-										<div class="ln"></div>
-										<div class="ln short"></div>
-										<div class="ln"></div>
+										<div class="h-[9px] bg-ink rounded-[2px] w-[60%] mb-[6px]"></div>
+										<div class="h-[6px] bg-[var(--color-gray-200)] rounded-[2px]"></div>
+										<div class="h-[6px] bg-[var(--color-gray-200)] rounded-[2px]"></div>
+										<div class="h-[6px] bg-[var(--color-gray-200)] rounded-[2px] w-[35%]"></div>
+										<div class="h-[6px] bg-[var(--color-gray-200)] rounded-[2px]"></div>
+										<div class="h-[6px] bg-[var(--color-gray-200)] rounded-[2px] w-[35%]"></div>
+										<div class="h-[6px] bg-[var(--color-gray-200)] rounded-[2px]"></div>
 									</div>
-									<span class="thumb-tag">{p.thumbCaption}</span>
+									<span
+										class="absolute left-[18px] bottom-[18px] bg-black/45 text-white px-[10px] py-1 rounded-[20px] [font-family:var(--font-mono)] text-[11px] tracking-[0.02em] backdrop-blur-[6px]"
+										>{p.thumbCaption}</span
+									>
 								</div>
 							{/if}
 
-							<p class="blurb">{p.blurb}</p>
-							<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;">
+							<p class="text-[15px] leading-[1.55] text-ink opacity-[.82] mt-[18px] mb-6 max-w-[52ch]">
+								{p.blurb}
+							</p>
+							<div class="flex gap-[6px] flex-wrap mb-[22px]">
 								{#each p.stack as s}<span class="tg-pill">{s}</span>{/each}
 							</div>
-							<div class="stats">
+							<div
+								class="flex gap-[18px] mt-auto border-t border-dashed border-line pt-[18px]"
+							>
 								{#each p.stats as st}
 									<div class="stat">
-										<div class="v">{st.v}</div>
-										<div class="l">{st.l}</div>
+										<div
+											class="[font-family:var(--font-display)] text-[22px] font-semibold text-ink tracking-[-0.01em] leading-[1.1]"
+										>
+											{st.v}
+										</div>
+										<div
+											class="text-[11px] text-ink-muted tracking-[0.04em] uppercase mt-1"
+										>
+											{st.l}
+										</div>
 									</div>
 								{/each}
 							</div>
@@ -301,17 +333,36 @@
 				{/each}
 			</div>
 		{:else}
-			<div class="projects-list">
+			<!-- Projects list -->
+			<div class="flex flex-col border-t border-line">
 				{#each filteredProjects as p}
 					<div class="reveal">
-						<a class="proj-row" href={`#${p.id}`} onclick={(e) => e.preventDefault()}>
-							<span class="yr">{p.year}</span>
-							<span class="ttl">{p.title}<small>{p.role}</small></span>
-							<span class="desc">{p.blurb}</span>
-							<span class="tg"
+						<a
+							class="proj-row grid max-[900px]:[grid-template-columns:60px_1fr_auto] [grid-template-columns:80px_minmax(0,2fr)_minmax(0,2fr)_minmax(0,1.2fr)_auto] gap-[28px] max-[900px]:gap-[16px] items-center py-[28px] px-0 border-b border-line cursor-pointer transition-[160ms_var(--easing-default)] text-ink no-underline hover:pl-[12px] hover:pr-[12px] hover:bg-surface-alt"
+							href={`#${p.id}`}
+							onclick={(e) => e.preventDefault()}
+						>
+							<span
+								class="yr [font-family:var(--font-mono)] text-[12px] text-ink-muted tracking-[0.04em]"
+								>{p.year}</span
+							>
+							<span
+								class="ttl [font-family:var(--font-display)] text-[22px] font-semibold tracking-[-0.015em]"
+								>{p.title}<small
+									class="block [font-family:var(--font-body)] font-normal text-[12px] text-ink-muted mt-1"
+									>{p.role}</small
+								></span
+							>
+							<span
+								class="desc max-[900px]:hidden text-[14px] text-ink-muted leading-[1.55]"
+								>{p.blurb}</span
+							>
+							<span class="tg max-[900px]:hidden flex gap-[6px] flex-wrap"
 								>{#each p.stack.slice(0, 3) as s}<span class="tg-pill">{s}</span>{/each}</span
 							>
-							<span class="arr">
+							<span
+								class="arr w-[36px] h-[36px] rounded-full border border-line inline-flex items-center justify-center text-ink-muted transition-[160ms_var(--easing-default)]"
+							>
 								<svg
 									width="14"
 									height="14"

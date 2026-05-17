@@ -87,80 +87,63 @@
 </script>
 
 <style>
-  /* ── CTA section ── */
-  .cta { background: var(--canvas); color: var(--canvas-fg); padding: 140px 0 96px; position: relative; overflow: hidden; }
-  .cta::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--accent) 18%, transparent) 0%, transparent 50%); pointer-events: none; }
-  .cta .section-title { font-size: clamp(40px, 5.4vw, 72px); }
-  .cta .section-title .accent { color: var(--accent); }
+  /* ── CTA ::before radial gradient overlay ── */
+  .cta::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--accent) 18%, transparent) 0%, transparent 50%);
+    pointer-events: none;
+  }
 
-  /* ── Email card ── */
-  .email-card { display: inline-flex; align-items: center; gap: 16px; padding: 14px 16px 14px 20px; background: rgba(255,255,255,.04); border: 1px solid var(--canvas-line); border-radius: var(--radius-md); color: var(--canvas-fg); font-family: var(--font-mono); font-size: 14px; cursor: pointer; transition: 160ms var(--easing-default); width: 100%; }
-  .email-card:hover { background: rgba(255,255,255,.08); border-color: var(--accent); }
-  .email-card .copy { padding: 6px 10px; border-left: 1px solid var(--canvas-line); margin-left: 6px; color: var(--canvas-fg-muted); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; }
+  /* ── or-divider hr lines ── */
+  .or-divider::before,
+  .or-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--canvas-line);
+  }
 
-  /* ── Contact layout ── */
-  .contact-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.3fr); gap: 80px; align-items: start; }
-  @media (max-width: 880px) { .contact-grid { grid-template-columns: 1fr; gap: 48px; } }
-
-  .contact-side .or-divider { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--canvas-fg-muted); margin: 28px 0 18px; display: flex; align-items: center; gap: 12px; }
-  .contact-side .or-divider::before, .contact-side .or-divider::after { content: ""; flex: 1; height: 1px; background: var(--canvas-line); }
-  .contact-side .quick-links { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
-  .contact-side .quick-links a { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: 1px solid var(--canvas-line); border-radius: var(--radius-md); background: rgba(255,255,255,.03); color: var(--canvas-fg); font-size: 14px; font-weight: var(--fw-medium); transition: 160ms var(--easing-default); }
-  .contact-side .quick-links a:hover { border-color: var(--accent); background: rgba(255,255,255,.06); transform: translateY(-1px); }
-  .contact-side .quick-links a .lbl { flex: 1; }
-  .contact-side .quick-links a .sub { font-family: var(--font-mono); font-size: 11px; color: var(--canvas-fg-muted); letter-spacing: 0.04em; }
-
-  /* ── Contact form ── */
-  .contact-form { background: rgba(255,255,255,.03); border: 1px solid var(--canvas-line); border-radius: var(--radius-xl); padding: 32px; display: grid; gap: 18px; position: relative; backdrop-filter: blur(8px); }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 540px) { .form-row { grid-template-columns: 1fr; } }
-  .field { display: flex; flex-direction: column; gap: 8px; }
-  .field label, .field .field-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--canvas-fg-muted); display: flex; align-items: center; justify-content: space-between; }
-  .field label .req { color: var(--accent); }
-  .field input, .field textarea, .field select { font-family: var(--font-body); font-size: 15px; color: var(--canvas-fg); background: rgba(255,255,255,.04); border: 1px solid var(--canvas-line); border-radius: var(--radius-md); padding: 12px 14px; outline: none; transition: 160ms var(--easing-default); width: 100%; resize: vertical; }
-  .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,.32); }
-  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); background: rgba(255,255,255,.07); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 20%, transparent); }
-  .field.invalid input, .field.invalid textarea { border-color: var(--color-error-500); }
-  .field .hint { font-size: 11px; color: var(--canvas-fg-muted); font-family: var(--font-mono); }
-  .field .err { font-size: 12px; color: var(--color-error-500); }
-  .budget-options { display: flex; gap: 6px; flex-wrap: wrap; }
-  .budget-options input { display: none; }
-  .budget-options label.opt { font-family: var(--font-body); font-size: 13px; padding: 8px 14px; border: 1px solid var(--canvas-line); border-radius: var(--radius-full); color: var(--canvas-fg-muted); cursor: pointer; transition: 140ms var(--easing-default); display: inline-flex; align-items: center; }
-  .budget-options input:checked + label.opt { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .submit-row { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; gap: 16px; flex-wrap: wrap; }
-  .submit-row .powered { font-family: var(--font-mono); font-size: 11px; color: var(--canvas-fg-muted); letter-spacing: 0.04em; display: inline-flex; align-items: center; gap: 8px; }
-  .submit-row .powered b { color: var(--canvas-fg); font-weight: 600; }
-  .form-submit { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border: 0; border-radius: var(--radius-md); background: var(--accent); color: #fff; font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: 160ms var(--easing-default); }
-  .form-submit:hover { background: var(--accent-strong); transform: translateY(-1px); }
-  .form-submit:disabled { opacity: 0.7; cursor: progress; transform: none; }
-  .form-success, .form-error { padding: 16px 18px; border-radius: var(--radius-md); font-family: var(--font-body); font-size: 14px; display: flex; align-items: center; gap: 12px; }
-  .form-success { background: color-mix(in srgb, var(--color-success-500) 18%, transparent); color: var(--canvas-fg); border: 1px solid color-mix(in srgb, var(--color-success-500) 40%, transparent); }
-  .form-error { background: color-mix(in srgb, var(--color-error-500) 18%, transparent); color: var(--canvas-fg); border: 1px solid color-mix(in srgb, var(--color-error-500) 40%, transparent); }
-
-  /* Sending dots animation */
+  /* ── Sending dots animation ── */
   .dot-pulse {
-    width: 4px; height: 4px; border-radius: 50%; background: #fff;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #fff;
     animation: dp 1.2s infinite ease-in-out;
   }
   @keyframes dp { 0%, 80%, 100% { opacity: 0.2; } 40% { opacity: 1; } }
 </style>
 
-<section id="contact" class="cta">
+<!-- CTA section -->
+<section
+	id="contact"
+	class="cta bg-canvas text-canvas-fg relative overflow-hidden pt-[140px] pb-[96px]"
+>
 	<div class="container">
 		<div class="section-title-row reveal">
 			<div class="left">
 				<span class="eyebrow">05 · Contact</span>
-				<h2 class="section-title">Have a problem worth <span class="accent">solving?</span></h2>
+				<h2 class="section-title">Have a problem worth <span class="text-accent-site">solving?</span></h2>
 			</div>
-			<p class="lead" style="color:var(--canvas-fg-muted);">
+			<p class="lead text-canvas-fg-muted">
 				I'm open to senior full-stack and platform engineering roles starting Q3 2026, and short
 				consulting engagements year-round. Especially keen on fintech, logistics, and developer
 				tooling.
 			</p>
 		</div>
-		<div class="contact-grid reveal">
+
+		<!-- contact grid -->
+		<div class="reveal grid grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] gap-[80px] items-start max-[880px]:grid-cols-1 max-[880px]:gap-[48px]">
+
+			<!-- left side -->
 			<div class="contact-side">
-				<button class="email-card" onclick={copyEmail}>
+				<!-- email card -->
+				<button
+					class="inline-flex items-center gap-4 px-4 py-[14px] pl-5 bg-white/[0.04] border border-canvas-line rounded-md text-canvas-fg [font-family:var(--font-mono)] text-[14px] cursor-pointer transition-all duration-[160ms] w-full hover:bg-white/[0.08] hover:border-accent-site"
+					onclick={copyEmail}
+				>
 					<svg
 						width="16"
 						height="16"
@@ -174,8 +157,8 @@
 							d="m22 6-10 7L2 6"
 						/></svg
 					>
-					<span style="flex:1;text-align:left;">{person.email}</span>
-					<span class="copy">
+					<span class="flex-1 text-left">{person.email}</span>
+					<span class="inline-flex items-center gap-[6px] px-[10px] py-[6px] border-l border-canvas-line ml-[6px] text-canvas-fg-muted text-[11px] tracking-[0.04em] uppercase">
 						{#if copied}
 							<svg
 								width="12"
@@ -206,9 +189,20 @@
 						{/if}
 					</span>
 				</button>
-				<div class="or-divider">or find me on</div>
-				<div class="quick-links">
-					<a href={person.links.linkedin} target="_blank" rel="noreferrer">
+
+				<!-- or divider -->
+				<div class="or-divider [font-family:var(--font-mono)] text-[11px] tracking-[0.1em] uppercase text-canvas-fg-muted mt-7 mb-[18px] flex items-center gap-3">
+					or find me on
+				</div>
+
+				<!-- quick links -->
+				<div class="flex flex-col gap-3 mt-2">
+					<a
+						href={person.links.linkedin}
+						target="_blank"
+						rel="noreferrer"
+						class="flex items-center gap-[14px] px-[18px] py-[14px] border border-canvas-line rounded-md bg-white/[0.03] text-canvas-fg text-[14px] font-medium transition-all duration-[160ms] hover:border-accent-site hover:bg-white/[0.06] hover:-translate-y-px"
+					>
 						<svg
 							width="18"
 							height="18"
@@ -222,8 +216,8 @@
 								d="M2 9h4v12H2z"
 							/><circle cx="4" cy="4" r="2" /></svg
 						>
-						<span class="lbl">LinkedIn</span>
-						<span class="sub">/in/emmanuelkpendo</span>
+						<span class="flex-1">LinkedIn</span>
+						<span class="[font-family:var(--font-mono)] text-[11px] text-canvas-fg-muted tracking-[0.04em]">/in/emmanuelkpendo</span>
 						<svg
 							width="14"
 							height="14"
@@ -235,7 +229,12 @@
 							stroke-linejoin="round"><path d="M7 17 17 7" /><path d="M7 7h10v10" /></svg
 						>
 					</a>
-					<a href={person.links.github} target="_blank" rel="noreferrer">
+					<a
+						href={person.links.github}
+						target="_blank"
+						rel="noreferrer"
+						class="flex items-center gap-[14px] px-[18px] py-[14px] border border-canvas-line rounded-md bg-white/[0.03] text-canvas-fg text-[14px] font-medium transition-all duration-[160ms] hover:border-accent-site hover:bg-white/[0.06] hover:-translate-y-px"
+					>
 						<svg
 							width="18"
 							height="18"
@@ -249,8 +248,8 @@
 								d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
 							/><path d="M9 18c-4.51 2-5-2-7-2" /></svg
 						>
-						<span class="lbl">GitHub</span>
-						<span class="sub">@emmanuelkpendo</span>
+						<span class="flex-1">GitHub</span>
+						<span class="[font-family:var(--font-mono)] text-[11px] text-canvas-fg-muted tracking-[0.04em]">@emmanuelkpendo</span>
 						<svg
 							width="14"
 							height="14"
@@ -262,7 +261,10 @@
 							stroke-linejoin="round"><path d="M7 17 17 7" /><path d="M7 7h10v10" /></svg
 						>
 					</a>
-					<a href={`mailto:${person.email}`}>
+					<a
+						href={`mailto:${person.email}`}
+						class="flex items-center gap-[14px] px-[18px] py-[14px] border border-canvas-line rounded-md bg-white/[0.03] text-canvas-fg text-[14px] font-medium transition-all duration-[160ms] hover:border-accent-site hover:bg-white/[0.06] hover:-translate-y-px"
+					>
 						<svg
 							width="18"
 							height="18"
@@ -276,8 +278,8 @@
 								d="m22 6-10 7L2 6"
 							/></svg
 						>
-						<span class="lbl">Email</span>
-						<span class="sub">{person.email}</span>
+						<span class="flex-1">Email</span>
+						<span class="[font-family:var(--font-mono)] text-[11px] text-canvas-fg-muted tracking-[0.04em]">{person.email}</span>
 						<svg
 							width="14"
 							height="14"
@@ -292,14 +294,10 @@
 				</div>
 			</div>
 
+			<!-- right side: form or success state -->
 			{#if formStatus === 'sent'}
-				<div
-					class="contact-form"
-					style="min-height:380px;justify-content:center;align-items:center;display:flex;flex-direction:column;text-align:center;gap:16px;"
-				>
-					<div
-						style="width:64px;height:64px;border-radius:50%;background:color-mix(in srgb,var(--color-success-500) 18%,transparent);display:inline-flex;align-items:center;justify-content:center;color:var(--color-success-500);"
-					>
+				<div class="bg-white/[0.03] border border-canvas-line rounded-xl p-8 grid gap-[18px] relative backdrop-blur-[8px] min-h-[380px] flex flex-col justify-center items-center text-center gap-4">
+					<div class="w-16 h-16 rounded-full bg-[color-mix(in_srgb,var(--color-success-500)_18%,transparent)] inline-flex items-center justify-center text-[var(--color-success-500)]">
 						<svg
 							width="28"
 							height="28"
@@ -311,16 +309,17 @@
 							stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg
 						>
 					</div>
-					<h3
-						style="font-family:var(--font-display);color:var(--canvas-fg);margin:0;font-size:24px;font-weight:600;"
-					>
+					<h3 class="[font-family:var(--font-display)] text-canvas-fg m-0 text-[24px] font-semibold">
 						Got it, thanks.
 					</h3>
-					<p style="color:var(--canvas-fg-muted);margin:0;font-size:14px;max-width:36ch;">
+					<p class="text-canvas-fg-muted m-0 text-[14px] max-w-[36ch]">
 						I'll reply within two working days. If it's urgent, drop me a line at
-						<a href={`mailto:${person.email}`} style="color:var(--accent);">{person.email}</a>.
+						<a href={`mailto:${person.email}`} class="text-accent-site">{person.email}</a>.
 					</p>
-					<button class="form-submit" onclick={() => (formStatus = 'idle')} style="margin-top:10px;">
+					<button
+						class="inline-flex items-center gap-[10px] px-[22px] py-[14px] border-0 rounded-md bg-accent-site text-white [font-family:var(--font-body)] text-[14px] font-medium cursor-pointer transition-all duration-[160ms] mt-[10px] hover:bg-accent-strong hover:-translate-y-px"
+						onclick={() => (formStatus = 'idle')}
+					>
 						Send another
 						<svg
 							width="14"
@@ -335,48 +334,81 @@
 					</button>
 				</div>
 			{:else}
-				<form class="contact-form" onsubmit={submitForm} novalidate>
-					<div class="form-row">
-						<div class={`field ${formErrors.name ? 'invalid' : ''}`}>
-							<label for="cf-name">Name <span class="req">*</span></label>
+				<form
+					class="bg-white/[0.03] border border-canvas-line rounded-xl p-8 grid gap-[18px] relative backdrop-blur-[8px]"
+					onsubmit={submitForm}
+					novalidate
+				>
+					<!-- row: name + email -->
+					<div class="grid grid-cols-2 gap-4 max-[540px]:grid-cols-1">
+						<!-- name field -->
+						<div class="flex flex-col gap-2">
+							<label
+								for="cf-name"
+								class="[font-family:var(--font-mono)] text-[11px] tracking-[0.08em] uppercase text-canvas-fg-muted flex items-center justify-between"
+							>
+								Name <span class="text-accent-site">*</span>
+							</label>
 							<input
 								id="cf-name"
 								placeholder="Ada Lovelace"
 								bind:value={formData.name}
 								autocomplete="name"
+								class="[font-family:var(--font-body)] text-[15px] text-canvas-fg bg-white/[0.04] border rounded-md px-[14px] py-3 outline-none transition-all duration-[160ms] w-full resize-y focus:border-accent-site focus:bg-white/[0.07] focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_20%,transparent)] placeholder:text-white/[0.32] {formErrors.name ? 'border-[var(--color-error-500)]' : 'border-canvas-line'}"
 							/>
-							{#if formErrors.name}<span class="err">{formErrors.name}</span>{/if}
+							{#if formErrors.name}<span class="text-[12px] text-[var(--color-error-500)]">{formErrors.name}</span>{/if}
 						</div>
-						<div class={`field ${formErrors.email ? 'invalid' : ''}`}>
-							<label for="cf-email">Email <span class="req">*</span></label>
+						<!-- email field -->
+						<div class="flex flex-col gap-2">
+							<label
+								for="cf-email"
+								class="[font-family:var(--font-mono)] text-[11px] tracking-[0.08em] uppercase text-canvas-fg-muted flex items-center justify-between"
+							>
+								Email <span class="text-accent-site">*</span>
+							</label>
 							<input
 								id="cf-email"
 								type="email"
 								placeholder="ada@engine.dev"
 								bind:value={formData.email}
 								autocomplete="email"
+								class="[font-family:var(--font-body)] text-[15px] text-canvas-fg bg-white/[0.04] border rounded-md px-[14px] py-3 outline-none transition-all duration-[160ms] w-full resize-y focus:border-accent-site focus:bg-white/[0.07] focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_20%,transparent)] placeholder:text-white/[0.32] {formErrors.email ? 'border-[var(--color-error-500)]' : 'border-canvas-line'}"
 							/>
-							{#if formErrors.email}<span class="err">{formErrors.email}</span>{/if}
+							{#if formErrors.email}<span class="text-[12px] text-[var(--color-error-500)]">{formErrors.email}</span>{/if}
 						</div>
 					</div>
-					<div class="form-row">
-						<div class="field">
-							<label for="cf-co"
-								>Company <span
-									style="color:var(--canvas-fg-muted);font-weight:400;text-transform:none;letter-spacing:0;"
-									>(optional)</span
-								></label
+
+					<!-- row: company + subject -->
+					<div class="grid grid-cols-2 gap-4 max-[540px]:grid-cols-1">
+						<!-- company field -->
+						<div class="flex flex-col gap-2">
+							<label
+								for="cf-co"
+								class="[font-family:var(--font-mono)] text-[11px] tracking-[0.08em] uppercase text-canvas-fg-muted flex items-center justify-between"
 							>
+								Company <span class="text-canvas-fg-muted font-normal normal-case tracking-normal">(optional)</span>
+							</label>
 							<input
 								id="cf-co"
 								placeholder="Where you're writing from"
 								bind:value={formData.company}
 								autocomplete="organization"
+								class="[font-family:var(--font-body)] text-[15px] text-canvas-fg bg-white/[0.04] border border-canvas-line rounded-md px-[14px] py-3 outline-none transition-all duration-[160ms] w-full resize-y focus:border-accent-site focus:bg-white/[0.07] focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_20%,transparent)] placeholder:text-white/[0.32]"
 							/>
 						</div>
-						<div class="field">
-							<label for="cf-sub">What's this about?</label>
-							<select id="cf-sub" bind:value={formData.subject}>
+						<!-- subject field -->
+						<div class="flex flex-col gap-2">
+							<label
+								for="cf-sub"
+								class="[font-family:var(--font-mono)] text-[11px] tracking-[0.08em] uppercase text-canvas-fg-muted flex items-center justify-between"
+							>
+								What's this about?
+							</label>
+							<select
+								id="cf-sub"
+								bind:value={formData.subject}
+								class="[font-family:var(--font-body)] text-[15px] text-canvas-fg bg-white/[0.04] border border-canvas-line rounded-md px-[14px] py-3 outline-none transition-all duration-[160ms] w-full focus:border-accent-site focus:bg-white/[0.07] focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_20%,transparent)]"
+							>
 								<option value="general">General hello</option>
 								<option value="role">A full-time role</option>
 								<option value="consulting">Short-term consulting</option>
@@ -385,10 +417,17 @@
 							</select>
 						</div>
 					</div>
+
+					<!-- budget options (conditional) -->
 					{#if formData.subject === 'consulting' || formData.subject === 'role'}
-						<div class="field" role="group" aria-labelledby="budget-label">
-							<span id="budget-label" class="field-label">Rough budget or range</span>
-							<div class="budget-options">
+						<div class="flex flex-col gap-2" role="group" aria-labelledby="budget-label">
+							<span
+								id="budget-label"
+								class="[font-family:var(--font-mono)] text-[11px] tracking-[0.08em] uppercase text-canvas-fg-muted flex items-center justify-between"
+							>
+								Rough budget or range
+							</span>
+							<div class="flex gap-[6px] flex-wrap">
 								{#each budgets as b, bi}
 									<input
 										type="radio"
@@ -396,28 +435,42 @@
 										name="budget"
 										checked={formData.budget === b}
 										onchange={() => (formData.budget = b)}
+										class="hidden"
 									/>
-									<label class="opt" for={`b-${bi}`}>{b}</label>
+									<label
+										class="[font-family:var(--font-body)] text-[13px] px-[14px] py-2 border rounded-full cursor-pointer transition-all duration-[140ms] inline-flex items-center {formData.budget === b ? 'bg-accent-site border-accent-site text-white' : 'border-canvas-line text-canvas-fg-muted'}"
+										for={`b-${bi}`}
+									>{b}</label>
 								{/each}
 							</div>
 						</div>
 					{/if}
-					<div class={`field ${formErrors.message ? 'invalid' : ''}`}>
-						<label for="cf-msg">Message <span class="req">*</span></label>
+
+					<!-- message field -->
+					<div class="flex flex-col gap-2">
+						<label
+							for="cf-msg"
+							class="[font-family:var(--font-mono)] text-[11px] tracking-[0.08em] uppercase text-canvas-fg-muted flex items-center justify-between"
+						>
+							Message <span class="text-accent-site">*</span>
+						</label>
 						<textarea
 							id="cf-msg"
 							rows="5"
 							placeholder="A few sentences about what you're building, where you're stuck, or what you're hiring for."
 							bind:value={formData.message}
+							class="[font-family:var(--font-body)] text-[15px] text-canvas-fg bg-white/[0.04] border rounded-md px-[14px] py-3 outline-none transition-all duration-[160ms] w-full resize-y focus:border-accent-site focus:bg-white/[0.07] focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_20%,transparent)] placeholder:text-white/[0.32] {formErrors.message ? 'border-[var(--color-error-500)]' : 'border-canvas-line'}"
 						></textarea>
 						{#if formErrors.message}
-							<span class="err">{formErrors.message}</span>
+							<span class="text-[12px] text-[var(--color-error-500)]">{formErrors.message}</span>
 						{:else}
-							<span class="hint">{formData.message.length} characters · plain text</span>
+							<span class="text-[11px] text-canvas-fg-muted [font-family:var(--font-mono)]">{formData.message.length} characters · plain text</span>
 						{/if}
 					</div>
+
+					<!-- error banner -->
 					{#if formStatus === 'error'}
-						<div class="form-error">
+						<div class="[font-family:var(--font-body)] text-[14px] flex items-center gap-3 px-[18px] py-4 rounded-md bg-[color-mix(in_srgb,var(--color-error-500)_18%,transparent)] text-canvas-fg border border-[color-mix(in_srgb,var(--color-error-500)_40%,transparent)]">
 							<svg
 								width="16"
 								height="16"
@@ -434,12 +487,20 @@
 							<span>{formErrMsg}</span>
 						</div>
 					{/if}
-					<div class="submit-row">
-						<span class="powered">Sends through <b>Resend</b> · replies within 2 days</span>
-						<button type="submit" class="form-submit" disabled={formStatus === 'sending'}>
+
+					<!-- submit row -->
+					<div class="flex items-center justify-between mt-[6px] gap-4 flex-wrap">
+						<span class="[font-family:var(--font-mono)] text-[11px] text-canvas-fg-muted tracking-[0.04em] inline-flex items-center gap-2">
+							Sends through <b class="text-canvas-fg font-semibold">Resend</b> · replies within 2 days
+						</span>
+						<button
+							type="submit"
+							disabled={formStatus === 'sending'}
+							class="inline-flex items-center gap-[10px] px-[22px] py-[14px] border-0 rounded-md bg-accent-site text-white [font-family:var(--font-body)] text-[14px] font-medium cursor-pointer transition-all duration-[160ms] hover:bg-accent-strong hover:-translate-y-px disabled:opacity-70 disabled:cursor-progress disabled:translate-y-0"
+						>
 							{#if formStatus === 'sending'}
 								Sending
-								<span style="display:inline-flex;gap:4px;margin-left:6px;">
+								<span class="inline-flex gap-1 ml-[6px]">
 									{#each [0, 1, 2] as i}
 										<span class="dot-pulse" style={`animation-delay:${i * 0.15}s`}></span>
 									{/each}
