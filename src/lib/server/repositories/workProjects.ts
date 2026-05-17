@@ -1,4 +1,4 @@
-import { Prisma } from '../../../generated/prisma/client';
+import { Prisma } from '@prisma/client';
 import type { WorkProject } from '$lib/interfaces';
 import type { ProjectStat } from '$lib/types';
 import { PROJECTS } from '$lib/data/projects';

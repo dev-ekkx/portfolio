@@ -1,11 +1,11 @@
 
 datasource db {
   provider = "mongodb"
+  url      = env("MONGODB_URL")
 }
 
 generator client {
-  provider = "prisma-client"
-  output = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 model Project {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId

@@ -9,7 +9,10 @@ export const GET: RequestHandler = async () => {
 		const projects = await getProjects();
 		return json(projects);
 	} catch {
-		const fallback = defaultProjects.map((project, index) => ({ ...project, id: `fallback-${index + 1}` }));
+		const fallback = defaultProjects.map((project, index) => ({
+			...project,
+			id: `fallback-${index + 1}`
+		}));
 		return json(fallback);
 	}
 };

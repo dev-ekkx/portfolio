@@ -453,13 +453,6 @@ section.bg-canvas .section-title-row .lead {
 		letter-spacing: -0.02em;
 	}
 
-	html,
-	body,
-	button,
-	a {
-		@apply cursor-none;
-	}
-
 	a {
 		@apply text-white/95 transition-colors hover:text-cyan-100;
 	}
