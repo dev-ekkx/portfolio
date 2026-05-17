@@ -5,7 +5,25 @@ import { getExperience } from '$lib/server/repositories/experience';
 import { getStack } from '$lib/server/repositories/stack';
 import { getSitePerson } from '$lib/server/repositories/person';
 
-export const load: PageServerLoad = async () => {
+const EMPTY = {
+	user: null,
+	projects: [],
+	workProjects: [],
+	experience: [],
+	stack: [],
+	person: null,
+	facts: [],
+	dbConnected: false
+} as const;
+
+export const load: PageServerLoad = async ({ locals }) => {
+	const { user } = locals;
+	const adminEmail = process.env.ADMIN_EMAIL;
+
+	if (!user || user.email !== adminEmail) {
+		return { ...EMPTY, user };
+	}
+
 	const [projects, workProjects, experience, stack, personResult] = await Promise.allSettled([
 		getProjects(),
 		getWorkProjects(),
@@ -15,6 +33,7 @@ export const load: PageServerLoad = async () => {
 	]);
 
 	return {
+		user,
 		projects: projects.status === 'fulfilled' ? projects.value : [],
 		workProjects: workProjects.status === 'fulfilled' ? workProjects.value : [],
 		experience: experience.status === 'fulfilled' ? experience.value : [],
