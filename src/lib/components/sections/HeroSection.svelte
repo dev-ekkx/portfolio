@@ -155,10 +155,9 @@
 		z-index: 0;
 		pointer-events: none;
 		background-image:
-			linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-			linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+			linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+			linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
 		background-size: 80px 80px;
-		background-position: 0 0;
 		-webkit-mask-image: radial-gradient(
 			ellipse 80% 70% at 50% 38%,
 			#000 0%,
@@ -166,14 +165,51 @@
 			transparent 92%
 		);
 		mask-image: radial-gradient(ellipse 80% 70% at 50% 38%, #000 0%, #000 55%, transparent 92%);
-		animation: gridDrift 32s linear infinite;
+		animation:
+			gridDrift 20s linear infinite,
+			gridBreath 8s ease-in-out infinite;
+	}
+	/* accent glow that pulses from the centre */
+	.hero-grid-bg::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(
+			ellipse 65% 55% at 50% 38%,
+			color-mix(in srgb, var(--accent) 14%, transparent) 0%,
+			transparent 70%
+		);
+		animation: gridGlow 7s ease-in-out infinite;
+	}
+	/* diagonal shimmer beam that sweeps across */
+	.hero-grid-bg::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			112deg,
+			transparent 20%,
+			rgba(255, 255, 255, 0.04) 40%,
+			rgba(255, 255, 255, 0.1) 50%,
+			rgba(255, 255, 255, 0.04) 60%,
+			transparent 80%
+		);
+		animation: gridSweep 12s ease-in-out infinite 1.5s;
 	}
 	@keyframes gridDrift {
-		from {
-			background-position: 0 0;
-		}
-		to {
-			background-position: 80px 80px;
-		}
+		from { background-position: 0 0; }
+		to { background-position: 80px 80px; }
+	}
+	@keyframes gridBreath {
+		0%, 100% { opacity: 0.65; }
+		50% { opacity: 1; }
+	}
+	@keyframes gridGlow {
+		0%, 100% { opacity: 0.35; transform: scale(0.98); }
+		50% { opacity: 1; transform: scale(1.04); }
+	}
+	@keyframes gridSweep {
+		0% { transform: translateX(-140%); }
+		100% { transform: translateX(240%); }
 	}
 </style>
