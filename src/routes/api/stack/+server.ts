@@ -1,8 +1,9 @@
 import { json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 import { getStack, createStackGroup } from '$lib/server/repositories/stack';
 import type { StackGroup } from '$lib/interfaces';
 
-export const GET = async () => {
+export const GET: RequestHandler = async () => {
 	try {
 		const groups = await getStack();
 		return json(groups);
@@ -11,7 +12,7 @@ export const GET = async () => {
 	}
 };
 
-export const POST = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const payload = (await request.json()) as StackGroup;
 		const group = await createStackGroup(payload);

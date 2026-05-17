@@ -1,9 +1,10 @@
 import { json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 import { defaultProjects } from '$lib/data/projects';
 import { createProject, getProjects } from '$lib/server/repositories/projects';
 import type { Project } from '$lib/interfaces';
 
-export const GET = async () => {
+export const GET: RequestHandler = async () => {
 	try {
 		const projects = await getProjects();
 		return json(projects);
@@ -13,7 +14,7 @@ export const GET = async () => {
 	}
 };
 
-export const POST = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const payload = (await request.json()) as Omit<Project, 'id'>;
 		const project = await createProject(payload);
