@@ -1,4 +1,4 @@
-import type { Prisma } from '@prisma/client';
+import { Prisma } from '../../../generated/prisma/client';
 import type { WorkProject } from '$lib/interfaces';
 import type { ProjectStat } from '$lib/types';
 import { PROJECTS } from '$lib/data/projects';
@@ -79,4 +79,55 @@ export const getWorkProjects = async (): Promise<WorkProject[]> => {
 		rows = await prisma.workProject.findMany({ orderBy: { order: 'asc' } });
 	}
 	return rows.map(toWorkProject);
+};
+
+export const createWorkProject = async (
+	data: Omit<WorkProject, 'id'> & { slug: string }
+): Promise<WorkProject> => {
+	if (!isMongoConfigured()) throw new Error('DB_UNAVAILABLE');
+	const count = await prisma.workProject.count();
+	const row = await prisma.workProject.create({
+		data: {
+			slug: data.slug,
+			year: data.year,
+			title: data.title,
+			role: data.role,
+			blurb: data.blurb,
+			tags: data.tags,
+			stack: data.stack,
+			stats: data.stats as unknown as Prisma.InputJsonValue,
+			thumbVariant: data.thumbVariant,
+			thumbCaption: data.thumbCaption,
+			order: count
+		}
+	});
+	return toWorkProject(row);
+};
+
+export const updateWorkProject = async (
+	slug: string,
+	data: Omit<WorkProject, 'id'> & { slug?: string }
+): Promise<WorkProject> => {
+	if (!isMongoConfigured()) throw new Error('DB_UNAVAILABLE');
+	const row = await prisma.workProject.update({
+		where: { slug },
+		data: {
+			...(data.slug && { slug: data.slug }),
+			year: data.year,
+			title: data.title,
+			role: data.role,
+			blurb: data.blurb,
+			tags: data.tags,
+			stack: data.stack,
+			stats: data.stats as unknown as Prisma.InputJsonValue,
+			thumbVariant: data.thumbVariant,
+			thumbCaption: data.thumbCaption
+		}
+	});
+	return toWorkProject(row);
+};
+
+export const deleteWorkProject = async (slug: string): Promise<void> => {
+	if (!isMongoConfigured()) throw new Error('DB_UNAVAILABLE');
+	await prisma.workProject.delete({ where: { slug } });
 };
