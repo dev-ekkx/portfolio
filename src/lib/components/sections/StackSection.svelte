@@ -41,20 +41,6 @@
 	});
 </script>
 
-<style>
-  .stack-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 40px; }
-  .stack-group { display: flex; flex-direction: column; gap: 20px; }
-  .stack-group .gh { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 14px; border-bottom: 1px solid var(--canvas-line); }
-  .stack-group .gh .gname { font-family: var(--font-display); font-size: 20px; font-weight: var(--fw-medium); color: var(--canvas-fg); letter-spacing: -0.01em; }
-  .stack-group .gh .gnum { font-family: var(--font-mono); font-size: 11px; color: var(--canvas-fg-muted); letter-spacing: 0.06em; }
-  .stack-group .gnote { font-family: var(--font-mono); font-size: 11px; color: var(--canvas-fg-muted); letter-spacing: 0.04em; text-transform: uppercase; margin: -8px 0 -4px; }
-  .stack-pills { display: flex; flex-wrap: wrap; gap: 6px; }
-  .stack-pill { font-family: var(--font-body); font-size: 13px; font-weight: var(--fw-medium); color: var(--canvas-fg); padding: 7px 12px; border-radius: var(--radius-md); background: rgba(255,255,255,.04); border: 1px solid var(--canvas-line); display: inline-flex; align-items: center; gap: 8px; cursor: default; transition: 220ms var(--easing-default); will-change: transform, background, border-color; }
-  .stack-pill:hover { background: color-mix(in srgb, var(--accent) 18%, transparent); border-color: color-mix(in srgb, var(--accent) 60%, transparent); transform: translateY(-2px); }
-  @media (max-width: 980px) { .stack-grid { grid-template-columns: repeat(2,1fr); gap: 32px; } }
-  @media (max-width: 540px) { .stack-grid { grid-template-columns: 1fr; gap: 28px; } }
-</style>
-
 <section id="stack" class="p-section bg-canvas">
 	<div class="container">
 		<div class="section-title-row reveal">
@@ -64,16 +50,16 @@
 			</div>
 			<p class="lead">Tools earn their place by being boring, fast, and well-documented.</p>
 		</div>
-		<div class="stack-grid" bind:this={stackGridRef}>
+		<div class="stack-grid grid grid-cols-4 max-[980px]:grid-cols-2 max-[540px]:grid-cols-1 gap-10 max-[980px]:gap-8 max-[540px]:gap-7" bind:this={stackGridRef}>
 			{#each stack as g, i}
-				<div class="stack-group">
-					<div class="gh">
-						<span class="gname">{g.name}</span>
-						<span class="gnum">{String(i + 1).padStart(2, '0')} / {stack.length}</span>
+				<div class="stack-group flex flex-col gap-5">
+					<div class="flex items-baseline justify-between pb-[14px] border-b border-canvas-line">
+						<span class="[font-family:var(--font-display)] text-[20px] font-medium text-canvas-fg tracking-[-0.01em]">{g.name}</span>
+						<span class="[font-family:var(--font-mono)] text-[11px] text-canvas-fg-muted tracking-[0.06em]">{String(i + 1).padStart(2, '0')} / {stack.length}</span>
 					</div>
-					<div class="gnote">{g.note}</div>
-					<div class="stack-pills">
-						{#each g.items as it}<span class="stack-pill">{it}</span>{/each}
+					<div class="[font-family:var(--font-mono)] text-[11px] text-canvas-fg-muted tracking-[0.04em] uppercase -mt-2 -mb-1">{g.note}</div>
+					<div class="stack-pills flex flex-wrap gap-[6px]">
+						{#each g.items as it}<span class="stack-pill [font-family:var(--font-body)] text-[13px] font-medium text-canvas-fg py-[7px] px-3 rounded-md bg-white/[0.04] border border-canvas-line inline-flex items-center gap-2 cursor-default transition-all duration-[220ms] hover:bg-[color-mix(in_srgb,var(--accent)_18%,transparent)] hover:border-[color-mix(in_srgb,var(--accent)_60%,transparent)] hover:-translate-y-0.5">{it}</span>{/each}
 					</div>
 				</div>
 			{/each}

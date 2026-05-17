@@ -31,164 +31,97 @@
 </script>
 
 <style>
-  .nav {
-    position: sticky; top: 0; z-index: var(--z-sticky);
-    background: color-mix(in srgb, var(--surface) 85%, transparent);
-    backdrop-filter: saturate(180%) blur(10px);
-    -webkit-backdrop-filter: saturate(180%) blur(10px);
-    border-bottom: 1px solid var(--line);
-  }
-  .nav.on-canvas {
-    background: color-mix(in srgb, var(--canvas) 70%, transparent);
-    border-bottom-color: var(--canvas-line);
-    color: var(--canvas-fg);
-  }
-  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-  .brand {
-    display: flex; align-items: center; gap: 10px;
-    font-family: var(--font-display); font-weight: var(--fw-semibold);
-    font-size: 16px; letter-spacing: -0.01em; cursor: pointer;
-  }
-  .brand .mono {
-    width: 28px; height: 28px; border-radius: 7px;
-    background: var(--accent); color: var(--color-white);
-    display: inline-flex; align-items: center; justify-content: center;
-    font-family: var(--font-display); font-weight: var(--fw-bold);
-    font-size: 12px; letter-spacing: 0;
-  }
-  .brand .dot { color: var(--accent); }
-  .nav-links { display: flex; align-items: center; gap: 28px; font-family: var(--font-body); font-size: 14px; font-weight: var(--fw-medium); }
-  .nav-links a {
-    position: relative; color: inherit; opacity: .68;
-    transition: opacity 200ms var(--easing-default), color 200ms var(--easing-default);
-    padding: 6px 0; cursor: pointer;
-  }
-  .nav-links a:hover { opacity: 1; }
-  .nav-links a.active { opacity: 1; color: var(--accent); }
-  .nav-links a.active .num { opacity: 1; color: var(--accent); }
+  /* Active link underline animation */
   .nav-links a.active::after {
-    content: ""; position: absolute; left: 22px; right: 0; bottom: -2px;
-    height: 2px; background: var(--accent); border-radius: 2px;
+    content: "";
+    position: absolute;
+    left: 22px;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
     animation: navDash 220ms var(--easing-default);
   }
   @keyframes navDash {
     from { transform: scaleX(0); transform-origin: left; }
     to   { transform: scaleX(1); }
   }
-  .nav-links a .num { font-family: var(--font-mono); font-size: 11px; margin-right: 6px; opacity: .55; transition: opacity 200ms var(--easing-default), color 200ms var(--easing-default); }
-  .nav-cta {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 16px; border-radius: var(--radius-md);
-    background: var(--accent); color: var(--color-white);
-    font-size: 13px; font-weight: var(--fw-medium);
-    border: 0; cursor: pointer; transition: 120ms ease-out;
-  }
-  .nav-cta:hover { background: var(--accent-strong); }
-  .nav-right { display: flex; align-items: center; gap: 12px; }
 
-  /* Hamburger — hidden on desktop */
-  .hamburger {
-    display: none; flex-direction: column; justify-content: center; align-items: center;
-    gap: 5px; width: 40px; height: 40px; padding: 0;
-    background: none; border: 1px solid var(--line); border-radius: var(--radius-md);
-    cursor: pointer; color: inherit;
-  }
-  .hamburger span {
-    display: block; width: 18px; height: 1.5px;
-    background: currentColor; border-radius: 2px; transform-origin: center;
-    transition: transform 240ms var(--easing-default), opacity 240ms var(--easing-default), width 240ms var(--easing-default);
-  }
+  /* Hamburger open-state transforms (nth-child not expressible per-element in Tailwind) */
   .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
   .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-  /* Overlay backdrop */
-  .mob-overlay {
-    display: none; position: fixed; inset: 0; z-index: calc(var(--z-sticky) - 1);
-    background: rgba(0,0,0,0.45); backdrop-filter: blur(2px);
-    opacity: 0; transition: opacity 280ms var(--easing-default);
-  }
-  .mob-overlay.open { opacity: 1; }
-
-  /* Slide-in drawer */
-  .mob-drawer {
-    display: none; position: fixed; top: 0; right: 0; bottom: 0;
-    width: min(320px, 85vw); z-index: var(--z-sticky);
-    background: var(--surface); border-left: 1px solid var(--line);
-    padding: 88px 32px 48px; flex-direction: column; gap: 0;
-    transform: translateX(100%); transition: transform 300ms var(--easing-default);
-    box-shadow: -8px 0 32px rgba(0,0,0,0.18);
-  }
-  .mob-drawer.open { transform: translateX(0); }
-
-  .mob-nav { display: flex; flex-direction: column; gap: 4px; flex: 1; }
-  .mob-nav a {
-    display: flex; align-items: center; gap: 14px;
-    padding: 14px 0; border-bottom: 1px solid var(--line);
-    font-family: var(--font-display); font-size: 18px; font-weight: var(--fw-semibold);
-    color: inherit; opacity: .65; cursor: pointer;
-    transition: opacity 180ms ease, color 180ms ease;
-  }
-  .mob-nav a:last-child { border-bottom: none; }
-  .mob-nav a:hover, .mob-nav a.active { opacity: 1; color: var(--accent); }
-  .mob-nav a .num { font-family: var(--font-mono); font-size: 11px; opacity: .5; }
-  .mob-nav a.active .num { opacity: 1; color: var(--accent); }
-
-  .mob-cmd {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 12px 20px; margin-top: 32px;
-    border-radius: var(--radius-md); border: 1px solid var(--line);
-    background: none; color: inherit; font-size: 14px;
-    font-weight: var(--fw-medium); cursor: pointer;
-    transition: background 120ms ease, border-color 120ms ease;
-  }
-  .mob-cmd:hover { background: var(--surface-alt); border-color: var(--accent); }
-  .mob-cmd kbd {
-    font-family: var(--font-mono); font-size: 11px;
-    padding: 2px 6px; border: 1px solid var(--line);
-    border-radius: 4px; margin-left: auto; opacity: .6;
-  }
-
-  @media (max-width: 720px) {
-    .nav-links { display: none; }
-    .nav-cta { display: none; }
-    .hamburger { display: flex; }
-    .mob-overlay { display: block; pointer-events: none; }
-    .mob-overlay.open { pointer-events: auto; }
-    .mob-drawer { display: flex; }
-  }
 </style>
 
 <svelte:window onkeydown={handleKeydown} />
 
-<nav class={`nav ${onCanvas ? 'on-canvas' : ''}`}>
-	<div class="container nav-inner">
+<nav
+  class="sticky top-0 z-[200] backdrop-saturate-[180%] backdrop-blur-[10px]
+         border-b transition-colors duration-200
+         {onCanvas
+           ? 'bg-canvas/70 border-canvas-line text-canvas-fg'
+           : 'bg-surface/85 border-line'}"
+>
+	<div class="container flex items-center justify-between h-[68px]">
+		<!-- Brand -->
 		<button
-			class="brand"
+			class="flex items-center gap-[10px]
+			       font-[family-name:var(--font-display)] font-semibold
+			       text-[16px] tracking-[-0.01em] cursor-pointer
+			       bg-transparent border-0 text-inherit"
 			onclick={() => { onScrollToAnchor('top'); closeMenu(); }}
-			style="background: none; border: none; color: inherit;"
 		>
-			<span class="mono">{person.initials}</span>
-			<span>{person.name}<span class="dot">.</span></span>
+			<span
+				class="w-7 h-7 rounded-[7px]
+				       bg-accent-site text-white
+				       inline-flex items-center justify-center
+				       font-[family-name:var(--font-display)] font-bold
+				       text-[12px] tracking-normal"
+			>{person.initials}</span>
+			<span>{person.name}<span class="text-accent-site">.</span></span>
 		</button>
 
-		<div class="nav-links">
+		<!-- Desktop nav links — hidden at max-[720px] -->
+		<div
+			class="nav-links flex items-center gap-7
+			       font-[family-name:var(--font-body)] text-[14px] font-medium
+			       max-[720px]:hidden"
+		>
 			{#each navSections as s}
 				<a
 					href={`#${s.id}`}
-					class={activeId === s.id ? 'active' : ''}
+					class="relative text-inherit opacity-[.68] py-[6px] cursor-pointer
+					       transition-opacity duration-200 transition-colors
+					       hover:opacity-100
+					       {activeId === s.id ? 'active opacity-100 text-accent-site' : ''}"
 					onclick={(e) => {
 						e.preventDefault();
 						onScrollToAnchor(s.id);
 					}}
 				>
-					<span class="num">{s.num}</span>{s.label}
+					<span
+						class="font-[family-name:var(--font-mono)] text-[11px] mr-[6px] opacity-[.55]
+						       transition-opacity duration-200 transition-colors
+						       {activeId === s.id ? 'opacity-100 text-accent-site' : ''}"
+					>{s.num}</span>{s.label}
 				</a>
 			{/each}
 		</div>
 
-		<div class="nav-right">
-			<button class="nav-cta" onclick={onOpenCmdPalette}>
+		<!-- Right side -->
+		<div class="flex items-center gap-3">
+			<!-- CTA button — hidden at max-[720px] -->
+			<button
+				class="nav-cta inline-flex items-center gap-2
+				       px-4 py-[10px] rounded-md
+				       bg-accent-site text-white
+				       text-[13px] font-medium border-0 cursor-pointer
+				       transition-colors duration-[120ms] ease-out
+				       hover:bg-accent-strong
+				       max-[720px]:hidden"
+				onclick={onOpenCmdPalette}
+			>
 				<svg
 					width="14"
 					height="14"
@@ -203,45 +136,87 @@
 					/></svg
 				>
 				Quick nav
-				<span style="opacity:.7;font-family:var(--font-mono);font-size:11px;margin-left:4px;">⌘K</span>
+				<span
+					class="opacity-70 font-[family-name:var(--font-mono)] text-[11px] ml-1"
+				>⌘K</span>
 			</button>
 
+			<!-- Hamburger — hidden on desktop, visible at max-[720px] -->
 			<button
-				class={`hamburger ${menuOpen ? 'open' : ''}`}
+				class="hamburger hidden max-[720px]:flex flex-col justify-center items-center
+				       gap-[5px] w-10 h-10 p-0
+				       bg-transparent border border-line rounded-md
+				       cursor-pointer text-inherit
+				       {menuOpen ? 'open' : ''}"
 				onclick={() => (menuOpen = !menuOpen)}
 				aria-label={menuOpen ? 'Close menu' : 'Open menu'}
 				aria-expanded={menuOpen}
 			>
-				<span></span>
-				<span></span>
-				<span></span>
+				<span class="block w-[18px] h-[1.5px] bg-current rounded-[2px] origin-center transition-all duration-[240ms]"></span>
+				<span class="block w-[18px] h-[1.5px] bg-current rounded-[2px] origin-center transition-all duration-[240ms]"></span>
+				<span class="block w-[18px] h-[1.5px] bg-current rounded-[2px] origin-center transition-all duration-[240ms]"></span>
 			</button>
 		</div>
 	</div>
 </nav>
 
-<!-- Mobile drawer -->
+<!-- Mobile overlay — hidden by default, shown at max-[720px] -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class={`mob-overlay ${menuOpen ? 'open' : ''}`} onclick={closeMenu}></div>
+<div
+	class="fixed inset-0 z-[199]
+	       bg-black/45 backdrop-blur-[2px]
+	       transition-opacity duration-[280ms]
+	       hidden max-[720px]:block
+	       {menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}"
+	onclick={closeMenu}
+></div>
 
-<div class={`mob-drawer ${menuOpen ? 'open' : ''}`} aria-hidden={!menuOpen}>
-	<nav class="mob-nav">
+<!-- Mobile drawer — hidden by default, shown at max-[720px] -->
+<div
+	class="fixed top-0 right-0 bottom-0 w-[min(320px,85vw)] z-[200]
+	       bg-surface border-l border-line
+	       pt-[88px] px-8 pb-12 flex-col gap-0
+	       shadow-[-8px_0_32px_rgba(0,0,0,0.18)]
+	       transition-transform duration-300
+	       hidden max-[720px]:flex
+	       {menuOpen ? 'translate-x-0' : 'translate-x-full'}"
+	aria-hidden={!menuOpen}
+>
+	<nav class="flex flex-col gap-1 flex-1">
 		{#each navSections as s}
 			<a
 				href={`#${s.id}`}
-				class={activeId === s.id ? 'active' : ''}
+				class="flex items-center gap-[14px]
+				       py-[14px] border-b border-line last:border-b-0
+				       font-[family-name:var(--font-display)] text-[18px] font-semibold
+				       text-inherit opacity-[.65] cursor-pointer
+				       transition-opacity duration-[180ms] ease transition-colors
+				       hover:opacity-100 hover:text-accent-site
+				       {activeId === s.id ? 'opacity-100 text-accent-site' : ''}"
 				onclick={(e) => {
 					e.preventDefault();
 					handleNavClick(s.id);
 				}}
 			>
-				<span class="num">{s.num}</span>
+				<span
+					class="font-[family-name:var(--font-mono)] text-[11px] opacity-[.5]
+					       {activeId === s.id ? 'opacity-100 text-accent-site' : ''}"
+				>{s.num}</span>
 				<span class="label">{s.label}</span>
 			</a>
 		{/each}
 	</nav>
-	<button class="mob-cmd" onclick={() => { onOpenCmdPalette(); closeMenu(); }}>
+	<button
+		class="inline-flex items-center gap-[10px]
+		       px-5 py-3 mt-8
+		       rounded-md border border-line
+		       bg-transparent text-inherit text-[14px] font-medium
+		       cursor-pointer
+		       transition-colors duration-[120ms] ease
+		       hover:bg-surface-alt hover:border-accent-site"
+		onclick={() => { onOpenCmdPalette(); closeMenu(); }}
+	>
 		<svg
 			width="15"
 			height="15"
@@ -256,6 +231,10 @@
 			/></svg
 		>
 		Quick nav
-		<kbd>⌘K</kbd>
+		<kbd
+			class="font-[family-name:var(--font-mono)] text-[11px]
+			       px-[6px] py-[2px] border border-line rounded-[4px]
+			       ml-auto opacity-60"
+		>⌘K</kbd>
 	</button>
 </div>

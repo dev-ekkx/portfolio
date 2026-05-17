@@ -189,24 +189,10 @@
 	--z-sticky: 200;
 	--z-modal: 1100;
 
-	/* ── Portfolio theme (light default) ── */
+	/* ── Portfolio theme (dark default) ── */
 	--accent: var(--color-orange-500);
-	--accent-soft: var(--color-orange-50);
+	--accent-soft: rgba(255, 90, 0, 0.12);
 	--accent-strong: var(--color-orange-600);
-	--surface: var(--color-white);
-	--surface-alt: var(--color-gray-50);
-	--surface-card: var(--color-white);
-	--ink: var(--color-blue-900);
-	--ink-muted: var(--color-gray-500);
-	--line: var(--color-gray-200);
-	--canvas: var(--color-blue-900);
-	--canvas-deep: var(--color-blue-950);
-	--canvas-fg: var(--color-white);
-	--canvas-fg-muted: rgba(255, 255, 255, 0.62);
-	--canvas-line: rgba(255, 255, 255, 0.1);
-}
-
-[data-theme='ink'] {
 	--surface: #0b1b27;
 	--surface-alt: #08283b;
 	--surface-card: #0e2434;

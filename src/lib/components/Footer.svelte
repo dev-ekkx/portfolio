@@ -19,7 +19,7 @@
 				aria-label="GitHub"
 				target="_blank"
 				rel="noreferrer"
-				class="social-link"
+				class="size-9 rounded-full border border-canvas-line inline-flex items-center justify-center text-canvas-fg transition-all duration-[140ms] hover:bg-accent-site hover:text-white hover:border-accent-site"
 			>
 				<svg
 					width="16"
@@ -40,7 +40,7 @@
 				aria-label="LinkedIn"
 				target="_blank"
 				rel="noreferrer"
-				class="social-link"
+				class="size-9 rounded-full border border-canvas-line inline-flex items-center justify-center text-canvas-fg transition-all duration-[140ms] hover:bg-accent-site hover:text-white hover:border-accent-site"
 			>
 				<svg
 					width="16"
@@ -61,7 +61,7 @@
 				aria-label="Twitter / X"
 				target="_blank"
 				rel="noreferrer"
-				class="social-link"
+				class="size-9 rounded-full border border-canvas-line inline-flex items-center justify-center text-canvas-fg transition-all duration-[140ms] hover:bg-accent-site hover:text-white hover:border-accent-site"
 			>
 				<svg
 					width="16"
@@ -79,13 +79,3 @@
 		<span class="font-mono">v2026.05 · all systems nominal</span>
 	</div>
 </footer>
-
-<style>
-  .social-link {
-    width: 36px; height: 36px; border-radius: 50%;
-    border: 1px solid var(--canvas-line);
-    display: inline-flex; align-items: center; justify-content: center;
-    color: var(--canvas-fg); transition: 140ms var(--easing-default);
-  }
-  .social-link:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-</style>
